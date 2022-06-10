@@ -1,5 +1,4 @@
 import logging
-
 import django
 from django import template
 from django.contrib.admin import AdminSite
@@ -105,9 +104,6 @@ def get_custom_menu(request, position):
 
 @simple_tag(takes_context=True)
 def get_menu(context, request, position='left'):
-    """
-    :type request: WSGIRequest
-    """
     if not isinstance(request, HttpRequest):
         return None
 
@@ -138,8 +134,23 @@ def get_menu(context, request, position='left'):
     if not available_apps:
         logging.warn('adminlteui was unable to retrieve apps list for menu.')
 
+    adminlte_settings = get_adminlte_settings()
+    if adminlte_settings.get('apps'):
+        # order by apps
+        ordered_apps = adminlte_settings.get('apps', {}).keys()
+        ordered_apps_dict = {}
+        un_ordered_apps = []
+        for app in available_apps:
+            if app.get('app_label') in ordered_apps:
+                ordered_apps_dict[app.get('app_label')] = app
+            else:
+                un_ordered_apps.append(app)
+        ordered_apps = [ordered_apps_dict.get(order_app) for order_app in ordered_apps]
+        available_apps = ordered_apps + un_ordered_apps
+
     for app in available_apps:
         if app.get('app_label') == 'django_admin_settings':
+            app['icon'] = 'fa-gear'
             if request.user.has_perm('django_admin_settings.add_options') or \
                     request.user.has_perm(
                         'django_admin_settings.change_options'):
@@ -155,14 +166,34 @@ def get_menu(context, request, position='left'):
                         },
                     'admin_url': reverse(
                         'admin:general_option'),
-                    'view_only': False
+                    'view_only': False,
                 })
         else:
+            # setup app icon
+            app['icon'] = adminlte_settings.get('apps', {}).get(app['app_label'], {}).get('icon')
+
+            if adminlte_settings.get('apps', {}).get(app['app_label'], {}).get('models'):
+                # order by models
+                ordered_models = adminlte_settings.get('apps', {}).get(app['app_label'], {}).get('models').keys()
+                ordered_models_dict = {}
+                un_ordered_models = []
+                for model in app.get('models', []):
+                    if model.get('object_name').lower() in ordered_models:
+                        ordered_models_dict[model.get('object_name').lower()] = model
+                    else:
+                        un_ordered_models.append(model)
+                ordered_models = [ordered_models_dict.get(ordered_model) for ordered_model in ordered_models]
+                app['models'] = ordered_models + un_ordered_models
+
             for model in app.get('models', []):
-                model['icon'] = get_adminlte_settings() \
-                    .get('icons', {}).get(app['app_label'], {}).get(
-                    model['name'].lower())
-    # return MenuManager(available_apps, context, request)
+                # setup model icon
+                model['icon'] = adminlte_settings. \
+                    get('apps', {}). \
+                    get(app['app_label'], {}). \
+                    get('models', {}). \
+                    get(model['object_name'].lower(), {}). \
+                    get('icon')
+
     return available_apps
 
 
