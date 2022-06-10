@@ -2,7 +2,7 @@
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 
 {% get_adminlte_settings as adminlte %}
-{% get_adminlte_option 'site_logo' as adminlte_site_logo %}
+{% get_adminlte_option 'site_logo' as adminlte_site_logo  %}
 
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
@@ -49,8 +49,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href={% static "admin/dist/css/fontgoogle.css" %}>
 </head>
-<body class="hold-transition skin-
-        {% if adminlte.skin %}{{ adminlte.skin }}{% else %}blue{% endif %} sidebar-mini fixed">
+<body class="hold-transition skin-{% if adminlte.skin %}{{ adminlte.skin }}{% else %}blue{% endif %} sidebar-mini fixed">
 <div class="wrapper">
     {% if not is_popup %}
         <header class="main-header">
@@ -59,24 +58,20 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">
                 {% if adminlte_site_logo.valid %}
-                    <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image"
-                         style="width:45px;height:45px;padding:5px;">
+                    <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% else %}
-                    <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image"
-                         style="width:45px;height:45px;padding:5px;">
+                    <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% endif %}
             </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg">
                 {% if adminlte_site_logo.valid %}
-                    <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image"
-                         style="width:45px;height:45px;padding:5px;">
+                    <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% else %}
-                    <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image"
-                         style="width:45px;height:45px;padding:5px;">
+                    <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% endif %}
                     <b>
-                    {% get_adminlte_option 'site_header' as adminlte_site_header %}
+                    {% get_adminlte_option 'site_header' as adminlte_site_header  %}
                         {% if adminlte_site_header.valid %}
                             {{ adminlte_site_header.site_header }}
                         {% else %}
@@ -99,7 +94,7 @@
                             {% for app in app_list %}
                                 <li class="dropdown user user-menu">
                                     <a href="{{ app.admin_url }}">
-                                        <i class="fa {% if app.icon %} {{ app.icon }} {% else %}fa-database{% endif %}"></i>
+                                        <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
                                         {{ app.name }}</a>
                                 </li>
                             {% endfor %}
@@ -112,31 +107,27 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar %}
+                                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
                                 {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
-                                    {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field %}
+                                    {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
                                     {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
-                                        <img src="{{ adminlte_avatar_field.avatar_field }}" class="user-image"
-                                             alt="User Image" style="width: 25px; height:25px;">
+                                        <img src="{{ adminlte_avatar_field.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
                                     {% else %}
-                                        <img src={% static "admin/dist/img/default.jpg" %} class="user-image"
-                                             alt="User Image">
+                                        <img src={% static "admin/dist/img/default.jpg" %} class="user-image" alt="User Image">
                                     {% endif %}
                                 {% endif %}
                                 <span class="hidden-xs">{{ request.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
-                                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar %}
+                                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
                                 {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
                                     <li class="user-header">
-                                        {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field %}
+                                        {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
                                         {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
-                                            <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle"
-                                                 alt="User Image" style="width: 90px; height:90px;">
+                                            <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
                                         {% else %}
-                                            <img src={% static "admin/dist/img/default.jpg" %} class="img-circle"
-                                                 alt="User Image">
+                                            <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
                                         {% endif %}
                                         <p>
                                             {{ request.user.username }} -
@@ -188,12 +179,10 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="{% url 'admin:password_change' %}"
-                                           class="btn btn-default btn-flat">{% trans 'Change password' %}</a>
+                                        <a  href="{% url 'admin:password_change' %}" class="btn btn-default btn-flat">{% trans 'Change password' %}</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="{% url 'admin:logout' %}"
-                                           class="btn btn-default btn-flat">{% trans 'Log out' %}</a>
+                                        <a href="{% url 'admin:logout' %}" class="btn btn-default btn-flat">{% trans 'Log out' %}</a>
                                     </div>
                                 </li>
                             </ul>
@@ -213,11 +202,11 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
-                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar %}
+                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
                 {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
                     <div class="user-panel">
                         <div class="pull-left image">
-                            {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field %}
+                            {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
                             {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
                                 <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image">
                             {% else %}
@@ -263,8 +252,7 @@
                                         {% if model.admin_url %}
                                             <li>
                                                 <a href="{{ model.admin_url }}">
-                                                    <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>
-                                                    <span>{{ model.name }}</span>
+                                                    <i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
                                                 </a>
                                             </li>
                                         {% endif %}
@@ -288,8 +276,7 @@
                                                 {% if model.admin_url %}
                                                     <li>
                                                         <a href="{{ model.admin_url }}">
-                                                            <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>
-                                                            <span>{{ model.name }}</span>
+                                                            <i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
                                                         </a>
                                                     </li>
                                                 {% endif %}
@@ -308,9 +295,8 @@
                                 {% if not adminlte.show_apps or adminlte.show_apps and not app.app_label or app.app_label in adminlte.show_apps %}
                                     {% if not app.app_label or app.app_label != adminlte.main_navigation_app %}
                                         <li {% if not app.admin_url %}class="treeview"{% endif %}>
-                                            <a href="
-                                                    {% if app.admin_url %}{{ app.admin_url }}{% else %}javascript:void(0){% endif %}">
-                                                <i class="fa {% if app.icon %} {{ app.icon }} {% else %}fa-database{% endif %}"></i>
+                                            <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
+                                                <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
                                                 <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
                                                 {% if not app.admin_url %}
                                                     <span class="pull-right-container">
@@ -322,9 +308,7 @@
                                                 <ul class="treeview-menu">
                                                     {% for model in app.models %}
                                                         {% if model.admin_url %}
-                                                            <li><a href="{{ model.admin_url }}"><i
-                                                                    class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}
-                                                            </a></li>
+                                                            <li><a href="{{ model.admin_url }}" ><i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}</a></li>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </ul>
@@ -534,8 +518,7 @@
                         <div class="form-group">
                             <label class="control-sidebar-subheading">
                                 Delete chat history
-                                <a href="javascript:void(0)" class="text-red pull-right"><i
-                                        class="fa fa-trash-o"></i></a>
+                                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
                             </label>
                         </div>
                         <!-- /.form-group -->
@@ -574,7 +557,7 @@
 {% endif %}
 <script>
     // use js control active status of siderbar-menu
-    $(function () {
+    $(function() {
         var menuActions = document.querySelectorAll('.sidebar-menu a')
         for (var i in menuActions) {
             var pathname = document.querySelector('#adminIndex').pathname
@@ -586,7 +569,7 @@
                 }
 
                 if (window.location.href.indexOf(menuActions[i].href) !== -1) {
-                    if (menuActions[i].href === window.location.origin + pathname) {
+                    if (menuActions[i].href===window.location.origin + pathname) {
                         continue
                     }
                     console.log('menu matched.', window.location.href, menuActions[i].href);
