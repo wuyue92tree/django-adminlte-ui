@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [v1.6.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.6.0)
+
+- fix #26 case by modify list_per_page with '…' str
+- add apps options in ADMINLTE_SETTINGS for menu icon & menu order
+- update adminlte from 2.3.6 -> 2.4.18
+
 ## [v1.5.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.5.1)
 
 - fix template tag for Django 3;

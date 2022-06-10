@@ -47,12 +47,20 @@ def get_adminlte_settings():
 
             # 'show_apps': ['django_admin_settings', 'auth', 'main'],
             # 'main_navigation_app': 'django_admin_settings',
-            'icons': {
-                'myapp': {
-                    'shops': 'fa-shopping-cart',
-                    'products': 'fa-dollar',
-                }
-            }
+            # 'apps': {
+            #     'example-app': {
+            #         'icon': 'fa-desktop',
+            #         'models': {
+            #             'example-model': {
+            #                 'icon': 'fa-archive'
+            #             },
+            #             'example-model1': {}
+            #         }
+            #     },
+            #     'auth': {
+            #         'icon': 'fa-users'
+            #     }
+            # }
         }
 
 

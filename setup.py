@@ -20,6 +20,6 @@ setup(
     zip_safe=False,
     entry_points={},
     install_requires=[
-        'django-treebeard==4.3'
+        'django-treebeard>=4.5.1'
     ],
 )
