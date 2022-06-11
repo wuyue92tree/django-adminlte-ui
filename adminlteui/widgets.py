@@ -8,10 +8,10 @@ class AdminlteSelect(Select):
     def _get_media(self):
         return forms.Media(
             css={
-                "all": ("admin/plugins/select2/select2.min.css",)
+                "all": ("admin/components/select2/dist/css/select2.min.css",)
             },
             js=(
-                "admin/plugins/select2/select2.min.js",
+                "admin/components/select2/dist/js/select2.min.js",
             ))
 
     media = property(_get_media)
@@ -27,10 +27,10 @@ class AdminlteSelectMultiple(SelectMultiple):
     def _get_media(self):
         return forms.Media(
             css={
-                "all": ("admin/plugins/select2/select2.min.css",)
+                "all": ("admin/components/select2/dist/css/select2.min.css",)
             },
             js=(
-                "admin/plugins/select2/select2.min.js",
+                "admin/components/select2/dist/js/select2.min.js",
             ))
 
     media = property(_get_media)

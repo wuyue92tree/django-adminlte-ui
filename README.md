@@ -13,7 +13,7 @@
 
 django admin theme base on adminlte
 
-adminlte version: 2.3.6
+adminlte version: 2.4.18
 
 # Helper
 

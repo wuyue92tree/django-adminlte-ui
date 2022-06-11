@@ -11,12 +11,12 @@
 
     {% if cl.search_fields %}
     <!-- DIV needed for valid HTML -->
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom: 5px;">
         <input class="form-control" type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus>
     </div>
     {% endif %}
     {% if cl.has_filters or cl.search_fields %}
-    <div class="form-group" id="search_group">
+    <div class="form-group" id="search_group" style="margin-bottom: 5px;">
         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">{% trans 'Search' %}</button>
         {% if show_result_count %}
         <span class="small quiet">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}{% else %}{% trans "Show all" %}{% endif %}</a>)</span>

@@ -169,28 +169,79 @@ url_name=video_parsed_changelist, app_names=['admin'], namespaces=['admin'], rou
 django url name = namespaces:url_name
 
 ## settings
+in your setting.py `ADMINLTE_SETTINGS`
 
+### demo
+Misleading demo features disabling/enabling
 ```python
-# in your setting.py
-# this is the default settings
-# what the setting work for? [You can see](https://github.com/wuyue92tree/django-adminlte-ui/pull/6)
-
 ADMINLTE_SETTINGS = {
     'demo': True,
+}
+```
+
+### search_form
+Search form disabling/enabling
+
+```python
+ADMINLTE_SETTINGS = {
     'search_form': True,
-    # 'skin': 'blue',
-    # 'copyright': '<a href="https://github.com/wuyue92tree/django-adminlte-ui/tree/'+version+'">django-adminlte-ui '+version+'</a>',
-    # 'navigation_expanded': True,
+}
+```
 
-    # if you are use custom menu, which will not effective below!
+### skin
+Skin choice
+```python
+ADMINLTE_SETTINGS = {
+    'skin': True,
+}
+```
 
-    # 'show_apps': ['django_admin_settings', 'auth', 'main'],
-    # 'main_navigation_app': 'django_admin_settings',
-    # 'icons': {
-    #     'myapp': {
-    #         'shops': 'fa-shopping-cart',
-    #         'products': 'fa-dollar',
-    #     }
-    # }
+### copyright
+Customer-specific copyright notice
+```python
+ADMINLTE_SETTINGS = {
+    'copyright': 'John Smith',
+}
+```
+
+### navigation_expanded
+Navigation expanded feature, making navigation elements not being hidden under openable menu
+```python
+ADMINLTE_SETTINGS = {
+    'navigation_expanded': True,
+}
+```
+
+### show_apps
+```python
+ADMINLTE_SETTINGS = {
+    'show_apps': ['django_admin_settings', 'auth', 'main'],
+}
+```
+### main_navigation_app
+Main navigation app feature, where app models are put on top of the menu
+```python
+ADMINLTE_SETTINGS = {
+    'main_navigation_app': 'django_admin_settings',
+}
+```
+
+### apps
+Modify apps icon & order apps/models
+
+```python
+ADMINLTE_SETTINGS = {
+    'example-app': {
+        'icon': 'fa-desktop',
+        'models': {
+            'example-model': {
+                'icon': 'fa-archive'
+            },
+            'example-model1': {}
+        }
+    },
+    'auth': {
+        'icon': 'fa-users'
+    }
 }
 ```
