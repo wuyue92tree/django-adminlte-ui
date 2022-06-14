@@ -1,5 +1,9 @@
 # ChangeLog
 
+## [v1.6.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.6.1)
+- fix app in ADMINLTE_SETTINGS but current_user has not perm
+- fix model in ADMINLTE_SETTINGS but current_user has not perm
+
 ## [v1.6.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.6.0)
 
 - fix #26 case by modify list_per_page with '…' str
