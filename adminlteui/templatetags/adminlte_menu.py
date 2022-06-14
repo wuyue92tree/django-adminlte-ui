@@ -145,8 +145,13 @@ def get_menu(context, request, position='left'):
                 ordered_apps_dict[app.get('app_label')] = app
             else:
                 un_ordered_apps.append(app)
-        ordered_apps = [ordered_apps_dict.get(order_app) for order_app in ordered_apps]
-        available_apps = ordered_apps + un_ordered_apps
+        _ordered_apps = []
+        # fix app in ADMINLTE_SETTINGS but current_user has not perm
+        for order_app in ordered_apps:
+            if not ordered_apps_dict.get(order_app):
+                continue
+            _ordered_apps.append(ordered_apps_dict.get(order_app))
+        available_apps = _ordered_apps + un_ordered_apps
 
     for app in available_apps:
         if app.get('app_label') == 'django_admin_settings':
@@ -182,8 +187,14 @@ def get_menu(context, request, position='left'):
                         ordered_models_dict[model.get('object_name').lower()] = model
                     else:
                         un_ordered_models.append(model)
-                ordered_models = [ordered_models_dict.get(ordered_model) for ordered_model in ordered_models]
-                app['models'] = ordered_models + un_ordered_models
+
+                _ordered_models = []
+                # fix model in ADMINLTE_SETTINGS but current_user has not perm
+                for order_model in ordered_models:
+                    if not ordered_models_dict.get(order_model):
+                        continue
+                    _ordered_models.append(ordered_models_dict.get(order_model))
+                app['models'] = _ordered_models + un_ordered_models
 
             for model in app.get('models', []):
                 # setup model icon
