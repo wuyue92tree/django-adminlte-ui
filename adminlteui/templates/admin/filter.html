@@ -1,15 +1,29 @@
 {% load i18n %}
 
 <div class="form-group" style="margin-bottom: 5px;">
-    <select class="form-control select2 select2-hidden-accessible search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
+    <select id="id_filter_{{ field_name }}" class="form-control search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true">
         <option value="">{{ title }}</option>
         <option value="">---------</option>
         {% for choice in choices %}
-        {% if choice.name %}
-        <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %} selected {% endif %}>
-            {{ choice.display }}
-        </option>
-        {% endif %}
+            {% if choice.name %}
+                <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %} selected {% endif %}>
+                    {{ choice.display }}
+                </option>
+            {% endif %}
         {% endfor %}
     </select>
+    {% if spec.display_select2 %}
+    <script>
+        django.jQuery('#id_filter_{{ field_name }}').select2({
+            width: django.jQuery('#id_filter_{{ field_name }}').width() + 26
+        })
+        django.jQuery('#id_filter_{{ field_name }}').on('select2:select', function (e) {
+            if (e.params.data.id !=='') {
+                django.jQuery('#id_filter_{{ field_name }}').attr('name', e.params.data.element.dataset.name)
+            } else {
+                django.jQuery('#id_filter_{{ field_name }}').removeAttr('name')
+            }
+        });
+    </script>
+    {% endif %}
 </div>
