@@ -50,6 +50,7 @@ def get_image_box():
 
 class ModelAdmin(admin.ModelAdmin):
     select2_list_filter = ()
+    search_field_placeholder = ''
 
     class Media:
         css = {
@@ -62,6 +63,7 @@ class ModelAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         view = super().changelist_view(request, extra_context)
         cl = view.context_data.get('cl')
+        cl.search_field_placeholder = self.search_field_placeholder
         filter_specs = cl.filter_specs
 
         for index, filter_spec in enumerate(filter_specs):

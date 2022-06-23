@@ -12,7 +12,7 @@
     {% if cl.search_fields %}
     <!-- DIV needed for valid HTML -->
     <div class="form-group" style="margin-bottom: 5px;">
-        <input class="form-control" type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus>
+        <input class="form-control" type="text" size="40" placeholder="{{ cl.search_field_placeholder }}" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus>
     </div>
     {% endif %}
     {% if cl.has_filters or cl.search_fields %}
