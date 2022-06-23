@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [v1.7.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.7.0)
+- make previous & next button effective on change_list.html
+- use select2 make admin filter searchable
+- add search_field_placeholder for search_fields
+- use `github actions` replace `travis`
+
 ## [v1.6.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.6.1)
 - fix app in ADMINLTE_SETTINGS but current_user has not perm
 - fix model in ADMINLTE_SETTINGS but current_user has not perm
