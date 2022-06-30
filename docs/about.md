@@ -1,4 +1,7 @@
 # ChangeLog
+## [v1.7.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.7.0)
+- fix exception when delete in changelist_view
+- update docs
 
 ## [v1.7.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.7.0)
 - make previous & next button effective on change_list.html
