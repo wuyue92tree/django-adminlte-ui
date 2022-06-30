@@ -62,16 +62,18 @@ class ModelAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         view = super().changelist_view(request, extra_context)
-        cl = view.context_data.get('cl')
-        cl.search_field_placeholder = self.search_field_placeholder
-        filter_specs = cl.filter_specs
+        if hasattr(view, 'context_data'):
+            cl = view.context_data.get('cl', None)
+            if cl:
+                cl.search_field_placeholder = self.search_field_placeholder
+                filter_specs = cl.filter_specs
 
-        for index, filter_spec in enumerate(filter_specs):
-            if filter_spec.field_path in self.select2_list_filter:
-                # flag to use select2
-                filter_spec.display_select2 = True
-                cl.filter_specs[index] = filter_spec
-        view.context_data['cl'] = cl
+                for index, filter_spec in enumerate(filter_specs):
+                    if filter_spec.field_path in self.select2_list_filter:
+                        # flag to use select2
+                        filter_spec.display_select2 = True
+                        cl.filter_specs[index] = filter_spec
+                view.context_data['cl'] = cl
         return view
 
 
