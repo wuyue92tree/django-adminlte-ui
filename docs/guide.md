@@ -264,17 +264,19 @@ Modify apps icon & order apps/models
 
 ```python
 ADMINLTE_SETTINGS = {
-    'example-app': {
-        'icon': 'fa-desktop',
-        'models': {
-            'example-model': {
-                'icon': 'fa-archive'
-            },
-            'example-model1': {}
+    'apps': {
+        'example-app': {
+            'icon': 'fa-desktop',
+            'models': {
+                'example-model': {
+                    'icon': 'fa-archive'
+                },
+                'example-model1': {}
+            }
+        },
+        'auth': {
+            'icon': 'fa-users'
         }
-    },
-    'auth': {
-        'icon': 'fa-users'
     }
 }
 ```
