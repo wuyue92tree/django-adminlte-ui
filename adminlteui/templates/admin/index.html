@@ -132,7 +132,7 @@
                     <ul class="timeline">
                         {% for entry in admin_log %}
                         <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
-                            <i class="fa fa-database bg-aqua"></i>
+                            <i class="fa fa-clock-o bg-aqua"></i>
                             <div class="timeline-item">
                                 <h3 class="timeline-header">
                                     {% if entry.is_deletion or not entry.get_admin_url %}
