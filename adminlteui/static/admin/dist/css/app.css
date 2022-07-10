@@ -257,6 +257,7 @@ ul.timelist, .timelist li {
     border: 1px solid #ccc;
     font-size: 16px;
     padding: 5px;
+    margin: 0;
 }
 
 .selector-chosen h2 {
