@@ -1,44 +1,63 @@
 <fieldset class="box box-solid module aligned {{ fieldset.classes }}">
     {% if fieldset.name %}
-    <div class="box-header with-border">
-        <div class="box-title">
-            {{ fieldset.name }}
-            {% if fieldset.description %}
-            <span class="description">{{ fieldset.description|safe }}</span>
-            {% endif %}
+        <div class="box-header with-border">
+            <div class="box-title">
+                {{ fieldset.name }}
+                {% if fieldset.description %}
+                    <span class="description">{{ fieldset.description|safe }}</span>
+                {% endif %}
+            </div>
         </div>
-    </div>
     {% endif %}
 
     <div {% if fieldset.name %}class="box-body"{% endif %}>
-    {% for line in fieldset %}
-    <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-        <div class="row">
-            {% for field in line %}
-            <label class="col-sm-2 control-label text-right">
-                {{ field.field.label }}
-            </label>
-            <div class="col-sm-7" {% if not line.fields|length_is:'1' %} class="col-sm-10 fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="col-sm-10 checkbox-row"{% endif %}>
-            {% if field.is_readonly %}
-            <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+        {% for line in fieldset %}
+            {% if line.fields|length_is:'1' %}
+                {% for field in line %}
+                    <div class="form-group row{% if line.errors %} has-error{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+                        <label class="col-md-2 control-label text-right">
+                            {{ field.field.label }}
+                        </label>
+                        <div class="col-md-8 {% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} has-error{% endif %}{% if field.field.is_hidden %} hidden{% endif %}">
+                            {% if field.is_readonly %}
+                                <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+                            {% else %}
+                                {{ field.field }}
+                                {% if line.errors %}
+                                    <label class="control-label" for="inputError"><i
+                                            class="fa fa-times-circle-o"></i>{{ line.errors }}</label>
+                                {% endif %}
+                            {% endif %}
+                            {% if field.field.help_text %}
+                                <div class="help-block">{{ field.field.help_text|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                {% endfor %}
             {% else %}
-            {{ field.field }}
+                <div class="row">
+                    {% for field in line %}
+                        <div class="form-group col-lg-4 col-md-6{% if field.field.errors %} has-error{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}" style="padding: 0">
+                            <label class="col-lg-6 col-md-4 control-label text-right">{{ field.field.label }}</label>
+                            <div class="col-lg-6 col-md-8">
+                                {% if field.is_readonly %}
+                                    <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+                                {% else %}
+                                    {{ field.field }}
+                                    {% if field.field.errors %}
+                                        <label class="control-label" for="inputError"><i
+                                                class="fa fa-times-circle-o"></i>{{ field.field.errors }}</label>
+                                    {% endif %}
+                                {% endif %}
+                                {% if field.field.help_text %}
+                                    <div class="help-block">{{ field.field.help_text|safe }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
-            <div class="help-block red">
-                {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
-            </div>
-            {% if field.field.help_text %}
-            <div class="help-block">{{ field.field.help_text|safe }}</div>
-            {% endif %}
-        </div>
         {% endfor %}
-        <div class="col-sm-3">
-            <div class="help-block text-red">
-                {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
-            </div>
-        </div>
-    </div>
-    </div>
-    {% endfor %}
     </div>
 </fieldset>
