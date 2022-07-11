@@ -244,7 +244,7 @@ ul.timelist, .timelist li {
 
 .selector-available, .selector-chosen {
     float: left;
-    width: 48%;
+    width: calc(48% - 11px);
     text-align: center;
     margin-bottom: 5px;
 }
@@ -255,6 +255,7 @@ ul.timelist, .timelist li {
 
 .selector-available h2, .selector-chosen h2 {
     border: 1px solid #ccc;
+    border-radius: 3px 3px 0 0;
     font-size: 16px;
     padding: 5px;
     margin: 0;
@@ -310,7 +311,7 @@ ul.timelist, .timelist li {
 
 .selector ul.selector-chooser {
     float: left;
-    width: 4%;
+    width: 22px;
     background-color: #eee;
     border-radius: 10px;
     margin: 10em 0 0;
