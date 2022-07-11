@@ -435,7 +435,7 @@ input[type="password"] {
 
 input[type="checkbox"] {
     width: auto;
-    height: 26px;
+    /*height: 26px;*/
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
