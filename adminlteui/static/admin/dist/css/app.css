@@ -244,7 +244,7 @@ ul.timelist, .timelist li {
 
 .selector-available, .selector-chosen {
     float: left;
-    width: 48%;
+    width: calc(50% - 11px);
     text-align: center;
     margin-bottom: 5px;
 }
@@ -255,8 +255,10 @@ ul.timelist, .timelist li {
 
 .selector-available h2, .selector-chosen h2 {
     border: 1px solid #ccc;
+    border-radius: 3px 3px 0 0;
     font-size: 16px;
     padding: 5px;
+    margin: 0;
 }
 
 .selector-chosen h2 {
@@ -309,7 +311,7 @@ ul.timelist, .timelist li {
 
 .selector ul.selector-chooser {
     float: left;
-    width: 4%;
+    width: 22px;
     background-color: #eee;
     border-radius: 10px;
     margin: 10em 0 0;
@@ -433,7 +435,7 @@ input[type="password"] {
 
 input[type="checkbox"] {
     width: auto;
-    height: 26px;
+    /*height: 26px;*/
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -444,4 +446,35 @@ input[type="checkbox"] {
 
 .control-label {
     margin-top: 7px;
+}
+
+ul.errorlist {
+    margin: 0;
+    padding-left: 5px;
+    display: inherit;
+}
+
+ul.errorlist li {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+}
+
+ul.errorlist li:first-child {
+    margin-top: 0;
+}
+
+ul.errorlist li a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+td ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+td ul.errorlist li {
+    margin: 0;
 }
