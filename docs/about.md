@@ -1,5 +1,12 @@
 # ChangeLog
-## [v1.7.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.7.0)
+
+## [v1.7.2](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.7.2)
+- fix submit_row issue & make change form tools float
+- improve fieldset.html & fix #15
+- fix translate in `password_change_form.html`
+- update `app.css`
+
+## [v1.7.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.7.1)
 - fix exception when delete in changelist_view
 - update docs
 
