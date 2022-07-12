@@ -37,25 +37,27 @@
                 {% endfor %}
             {% else %}
                 <div class="row">
-                    {% for field in line %}
-                        <div class="form-group col-lg-4 col-md-6{% if field.field.errors %} has-error{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}" style="padding: 0">
-                            <label class="col-lg-6 col-md-4 control-label text-right">{{ field.field.label }}</label>
-                            <div class="col-lg-6 col-md-8">
-                                {% if field.is_readonly %}
-                                    <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
-                                {% else %}
-                                    {{ field.field }}
-                                    {% if field.field.errors %}
-                                        <label class="control-label" for="inputError"><i
-                                                class="fa fa-times-circle-o"></i>{{ field.field.errors }}</label>
+                    <div class="col-lg-9 col-lg-offset-1" style="padding: 0">
+                        {% for field in line %}
+                            <div class="form-group col-lg-4 col-md-6{% if field.field.errors %} has-error{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}" style="padding: 0">
+                                <label class="col-md-4 control-label text-right">{{ field.field.label }}</label>
+                                <div class="col-md-8">
+                                    {% if field.is_readonly %}
+                                        <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+                                    {% else %}
+                                        {{ field.field }}
+                                        {% if field.field.errors %}
+                                            <label class="control-label" for="inputError"><i
+                                                    class="fa fa-times-circle-o"></i>{{ field.field.errors }}</label>
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
-                                {% if field.field.help_text %}
-                                    <div class="help-block">{{ field.field.help_text|safe }}</div>
-                                {% endif %}
+                                    {% if field.field.help_text %}
+                                        <div class="help-block">{{ field.field.help_text|safe }}</div>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             {% endif %}
         {% endfor %}
