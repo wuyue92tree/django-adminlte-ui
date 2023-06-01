@@ -8,5 +8,5 @@ __all__ = ['AdminlteUIConfig']
 
 class AdminlteUIConfig(AppConfig):
     name = 'adminlteui'
-    label = 'django_admin_settings'
-    verbose_name = _('AdminSettings')
+    label = 'adminlteui'
+    verbose_name = _('AdminLteUI')
