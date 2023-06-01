@@ -64,13 +64,6 @@ INSTALLED_APPS = [
 ## form page
 ![form page](./images/form.png)
 
-## general_option
-![general_option](./images/general_option.jpg)
-
-## menu list
-
-![menu list](./images/menu-list.png)
-
 
 # Features
 
