@@ -1,8 +1,7 @@
-{% load i18n static adminlte_options adminlte_menu %}<!DOCTYPE html>
+{% load i18n static adminlte_core adminlte_menu %}<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 
-{% get_adminlte_settings as adminlte %}
-{% get_adminlte_option 'site_logo' as adminlte_site_logo  %}
+{% get_adminlte_config_class as adminlte %}
 
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
@@ -57,27 +56,12 @@
             <a href="{% url 'admin:index' %}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">
-                {% if adminlte_site_logo.valid %}
-                    <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% else %}
-                    <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% endif %}
+                <img src="{{ adminlte.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
             </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg">
-                {% if adminlte_site_logo.valid %}
-                    <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% else %}
-                    <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% endif %}
-                    <b>
-                    {% get_adminlte_option 'site_header' as adminlte_site_header  %}
-                        {% if adminlte_site_header.valid %}
-                            {{ adminlte_site_header.site_header }}
-                        {% else %}
-                            {{ site_header }}
-                        {% endif %}
-                </b>
+                <img src="{{ adminlte.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
+                <b>{{ adminlte.site_header }}</b>
             </span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
@@ -89,13 +73,14 @@
 
                 <div class="navbar-custom-menu" style="float: left;">
                     <ul class="nav navbar-nav top-menu">
-                        {% get_menu request 'top' as app_list %}
-                        {% if app_list %}
-                            {% for app in app_list %}
+                        {% get_menu request 'top' as menu %}
+                        {% if nemu %}
+                            {% for menu_item in menu %}
                                 <li class="dropdown user user-menu">
-                                    <a href="{{ app.admin_url }}">
-                                        <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
-                                        {{ app.name }}</a>
+                                    <a href="{{ menu_item.url }}">
+                                        <i class="fa {{menu_item.icon}}"></i>
+                                        {{ menu_item.name }}
+                                    </a>
                                 </li>
                             {% endfor %}
                         {% endif %}
@@ -107,28 +92,16 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
-                                {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
-                                    {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
-                                    {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
-                                        <img src="{{ adminlte_avatar_field.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
-                                    {% else %}
-                                        <img src={% static "admin/dist/img/default.jpg" %} class="user-image" alt="User Image">
-                                    {% endif %}
+                                {% if adminlte.show_avatar %}
+                                    <img src="{{ adminlte.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
                                 {% endif %}
                                 <span class="hidden-xs">{{ request.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
-                                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
-                                {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
+                                {% if show_avatar.show_avatar %}
                                     <li class="user-header">
-                                        {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
-                                        {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
-                                            <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
-                                        {% else %}
-                                            <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
-                                        {% endif %}
+                                        <img src="{{ show_avatar.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
                                         <p>
                                             {{ request.user.username }} -
                                             {% if request.user.is_superuser %}
@@ -161,22 +134,6 @@
                                     </li>
                                 {% endif %}
 
-                                <!-- Menu Body -->
-                                <!--<li class="user-body">-->
-                                <!--<div class="row">-->
-                                <!--<div class="col-xs-4 text-center">-->
-                                <!--<a href="#">Followers</a>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-4 text-center">-->
-                                <!--<a href="#">Sales</a>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-4 text-center">-->
-                                <!--<a href="#">Friends</a>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--&lt;!&ndash; /.row &ndash;&gt;-->
-                                <!--</li>-->
-                                <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a  href="{% url 'admin:password_change' %}" class="btn btn-default btn-flat">{% trans 'Change password' %}</a>
@@ -202,16 +159,10 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
-                {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
-                {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
+                {% if adminlte.show_avatar %}
                     <div class="user-panel">
                         <div class="pull-left image">
-                            {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
-                            {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
-                                <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image">
-                            {% else %}
-                                <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
-                            {% endif %}
+                            <img src="{{ adminlte.avatar_field }}" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
                             <p>{{ request.user.username }}</p>
@@ -225,9 +176,9 @@
                         <div class="input-group">
                             <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %}...">
                             <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
+                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
                     </form>
                 {% endif %}
@@ -241,84 +192,30 @@
                             <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
                         </a>
                     </li>
-
-                    {% if adminlte.main_navigation_app %}
-
-                        {% get_menu request as app_list %}
-                        {% if app_list %}
-                            {% for app in app_list %}
-                                {% if app.app_label == adminlte.main_navigation_app %}
-                                    {% for model in app.models %}
-                                        {% if model.admin_url %}
-                                            <li>
-                                                <a href="{{ model.admin_url }}">
-                                                    <i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
-                    {% endif %}
-
-                    {% if adminlte.navigation_expanded %}
-
-                        {% get_menu request as app_list %}
-                        {% if app_list %}
-                            {% for app in app_list %}
-                                {% if not adminlte.show_apps or adminlte.show_apps and not app.app_label or app.app_label in adminlte.show_apps %}
-                                    {% if not app.app_label or app.app_label != adminlte.main_navigation_app %}
-                                        <li class="header">{{ app.name|upper }}</li>
-                                        {% for model in app.models %}
-                                            {% ifchanged %}
-                                                {% if model.admin_url %}
-                                                    <li>
-                                                        <a href="{{ model.admin_url }}">
-                                                            <i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
-                                                        </a>
-                                                    </li>
-                                                {% endif %}
-                                            {% endifchanged %}
-                                        {% endfor %}
+                    {% get_menu request as menu %}
+                    {% if menu %}
+                        {% for menu_item in menu %}
+                            <li {% if not menu_item.url %}class="treeview"{% endif %}>
+                                <a href="{% if menu_item.url %}{{menu_item.url}}{% else %}javascript:void(0){% endif %}">
+                                    <i class="fa {{menu_item.icon}}"></i>
+                                    <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ menu_item.name }}</span>
+                                    {% if not menu_item.url %}
+                                        <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
                                     {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
-                    {% else %}
-
-                        {% get_menu request as app_list %}
-                        {% if app_list %}
-                            {% for app in app_list %}
-                                {% if not adminlte.show_apps or adminlte.show_apps and not app.app_label or app.app_label in adminlte.show_apps %}
-                                    {% if not app.app_label or app.app_label != adminlte.main_navigation_app %}
-                                        <li {% if not app.admin_url %}class="treeview"{% endif %}>
-                                            <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
-                                                <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
-                                                <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
-                                                {% if not app.admin_url %}
-                                                    <span class="pull-right-container">
-                                  <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                                                {% endif %}
-                                            </a>
-                                            {% if not app.admin_url %}
-                                                <ul class="treeview-menu">
-                                                    {% for model in app.models %}
-                                                        {% if model.admin_url %}
-                                                            <li><a href="{{ model.admin_url }}" ><i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}</a></li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </ul>
+                                </a>
+                                {% if not menu_item.url %}
+                                    <ul class="treeview-menu">
+                                        {% for child in menu_item.child %}
+                                            {% if child.url %}
+                                                <li><a href="{{ child.url }}" ><i class="fa {{child.icon}}"></i>{{ child.name }}</a></li>
                                             {% endif %}
-                                        </li>
-                                    {% endif %}
+                                        {% endfor %}
+                                    </ul>
                                 {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
+                            </li>
+                        {% endfor %}
                     {% endif %}
                 </ul>
             </section>
