@@ -52,7 +52,6 @@ class AdminLteConfig(object):
     username_field = None
 
     site_logo = None
-    site_header = 'AdminLteUI'
 
     skin = None
 
