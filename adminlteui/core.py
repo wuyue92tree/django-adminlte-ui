@@ -53,6 +53,8 @@ class AdminLteConfig(object):
     site_logo = '/static/admin/dist/img/default-log.svg'
     site_header = 'AdminLteUI'
 
+    skin = None
+
     search_form = True
     copyright = None
     welcome_sign = None
