@@ -102,24 +102,24 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {% if adminlte.show_avatar %}
                                     {% if adminlte.avatar_field %}
-                                        <img src="{{ adminlte.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
+                                        <img src="{% eval_obj request adminlte.avatar_field %}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
                                     {% else %}
                                         <img src="{% static "admin/dist/img/default.jpg" %}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
                                     {% endif %}
                                 {% endif %}
-                                <span class="hidden-xs">{% if adminlte.username_field %}{{ adminlte.username_field }}{% else %}{{ request.user.username }}{% endif %}</span>
+                                <span class="hidden-xs">{% if adminlte.username_field %}{% eval_obj request adminlte.username_field %}{% else %}{{ request.user.username }}{% endif %}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 {% if adminlte.show_avatar %}
                                     <li class="user-header">
                                         {% if adminlte.avatar_field %}
-                                            <img src="{{ adminlte.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
+                                            <img src="{% eval_obj request adminlte.avatar_field %}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
                                         {% else %}
                                             <img src="{% static "admin/dist/img/default.jpg" %}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
                                         {% endif %}
                                         <p>
-                                            {% if adminlte.username_field %}{{ adminlte.username_field }}{% else %}{{ request.user.username }}{% endif %} -
+                                            {% if adminlte.username_field %}{% eval_obj request adminlte.username_field %}{% else %}{{ request.user.username }}{% endif %} -
                                             {% if request.user.is_superuser %}
                                                 {% trans "Super manager" %}
                                             {% else %}
@@ -135,7 +135,7 @@
                                 {% else %}
                                     <li class="user-header" style="height: auto;">
                                         <p>
-                                            {% if adminlte.username_field %}{{ adminlte.username_field }}{% else %}{{ request.user.username }}{% endif %} -
+                                            {% if adminlte.username_field %}{% eval_obj request adminlte.username_field %}{% else %}{{ request.user.username }}{% endif %} -
                                             {% if request.user.is_superuser %}
                                                 {% trans "Super manager" %}
                                             {% else %}
@@ -179,13 +179,13 @@
                     <div class="user-panel">
                         <div class="pull-left image">
                             {% if adminlte.avatar_field %}
-                                <img src="{{ adminlte.avatar_field }}" class="img-circle" alt="User Image">
+                                <img src="{% eval_obj request adminlte.avatar_field %}" class="img-circle" alt="User Image">
                             {% else %}
                                 <img src="{% static "admin/dist/img/default.jpg" %}" class="img-circle" alt="User Image">
                             {% endif %}
                         </div>
                         <div class="pull-left info">
-                            <p>{% if adminlte.username_field %}{{ adminlte.username_field }}{% else %}{{ request.user.username }}{% endif %}</p>
+                            <p>{% if adminlte.username_field %}{% eval_obj request adminlte.username_field %}{% else %}{{ request.user.username }}{% endif %}</p>
                             <a href="#"><i class="fa fa-circle text-success"></i> {% trans "Online" %}</a>
                         </div>
                     </div>

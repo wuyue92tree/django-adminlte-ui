@@ -24,3 +24,16 @@ def get_adminlte_config_class():
 @register.simple_tag
 def get_adminlte_version():
     return version
+
+
+@register.simple_tag
+def eval_obj(request, string):
+    """
+    eval username_field or avatar_field from request object
+    :param request:
+    :param string:
+    :return:
+    """
+    if string.startswith('request.') is False:
+        raise Exception('string must startswith `request.` when call eval_obj.')
+    return eval(string)
