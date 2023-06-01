@@ -48,9 +48,10 @@ class AdminLteConfig(object):
     main_menu = []
     top_menu = []
     show_avatar = False
-    avatar_field = 'request.user.avatar'
+    avatar_field = None
+    username_field = None
 
-    site_logo = '/static/admin/dist/img/default-log.svg'
+    site_logo = None
     site_header = 'AdminLteUI'
 
     skin = None
