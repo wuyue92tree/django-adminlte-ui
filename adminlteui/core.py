@@ -55,6 +55,7 @@ class AdminLteConfig(object):
 
     search_form = True
     copyright = None
+    welcome_sign = None
 
     @staticmethod
     def get_models(app_list):
