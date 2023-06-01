@@ -1,13 +1,11 @@
 import logging
+from typing import Literal
 import django
 from django import template
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
-from adminlteui.templatetags.adminlte_options import get_adminlte_option, \
-    get_adminlte_settings
-from adminlteui.models import Menu
+from adminlteui.templatetags.adminlte_core import get_adminlte_config_class
 
 try:
     from django.urls import reverse, resolve
@@ -22,98 +20,10 @@ else:
     simple_tag = register.simple_tag
 
 
-def get_reverse_link(link):
-    if not link or '/' in link:
-        return link
-
-    try:
-        return reverse(link)
-    except Exception as e:
-        return None
-
-
-def get_custom_menu(request, position):
-    """
-    use content_type and user.permission control the menu
-
-    `label:model`
-
-    :param request:
-    :return:
-    """
-    all_permissions = request.user.get_all_permissions()
-    # print(all_permissions)
-    limit_for_internal_link = []
-    for permission in all_permissions:
-        app_label = permission.split('.')[0]
-        model = permission.split('.')[1].split('_')[1]
-        limit_for_internal_link.append('{}:{}'.format(app_label, model))
-
-    limit_for_internal_link = set(limit_for_internal_link)
-    new_available_apps = []
-    menu = Menu.get_tree().filter(depth=1).order_by('-priority_level')
-    for menu_item in menu:
-        if menu_item.position != position:
-            continue
-
-        new_available_apps_item = {}
-        if menu_item.valid is False:
-            continue
-
-        new_available_apps_item['name'] = menu_item.name
-        new_available_apps_item['icon'] = menu_item.icon
-
-        children = menu_item.get_children().order_by('-priority_level')
-        if not children:
-            # skip menu_item that no children and link type is devide.
-            if menu_item.link_type in (0, 1):
-                new_available_apps_item['admin_url'] = get_reverse_link(
-                    menu_item.link)
-                new_available_apps.append(new_available_apps_item)
-            continue
-        new_available_apps_item['models'] = []
-
-        for children_item in children:
-            if children_item.link_type == 0:
-                # internal link should connect a content_type, otherwise it will be hide.
-                if children_item.content_type:
-                    obj = ContentType.objects.get(
-                        id=children_item.content_type.id)
-                    # if user hasn't permission, the model will be skip.
-                    if obj.app_label + ':' + obj.model not in limit_for_internal_link:
-                        continue
-                else:
-                    continue
-
-            if children_item.valid is False:
-                continue
-            new_children_item = dict()
-            new_children_item['name'] = children_item.name
-            new_children_item['admin_url'] = get_reverse_link(
-                children_item.link
-            )
-            if not new_children_item['admin_url']:
-                continue
-            new_children_item['icon'] = children_item.icon
-            new_available_apps_item['models'].append(new_children_item)
-        if new_available_apps_item['models']:
-            new_available_apps.append(new_available_apps_item)
-
-    return new_available_apps
-
-
 @simple_tag(takes_context=True)
-def get_menu(context, request, position='left'):
+def get_menu(context, request, position: Literal['main', 'top'] = 'main'):
     if not isinstance(request, HttpRequest):
         return None
-
-    use_custom_menu = get_adminlte_option('USE_CUSTOM_MENU')
-    if use_custom_menu.get('USE_CUSTOM_MENU',
-                           '0') == '1' and use_custom_menu.get('valid') is True:
-        return get_custom_menu(request, position)
-
-    if position != 'left':
-        return []
 
     # Django 1.9+
     available_apps = context.get('available_apps')
@@ -134,78 +44,12 @@ def get_menu(context, request, position='left'):
     if not available_apps:
         logging.warn('adminlteui was unable to retrieve apps list for menu.')
 
-    adminlte_settings = get_adminlte_settings()
-    if adminlte_settings.get('apps'):
-        # order by apps
-        ordered_apps = adminlte_settings.get('apps', {}).keys()
-        ordered_apps_dict = {}
-        un_ordered_apps = []
-        for app in available_apps:
-            if app.get('app_label') in ordered_apps:
-                ordered_apps_dict[app.get('app_label')] = app
-            else:
-                un_ordered_apps.append(app)
-        _ordered_apps = []
-        # fix app in ADMINLTE_SETTINGS but current_user has not perm
-        for order_app in ordered_apps:
-            if not ordered_apps_dict.get(order_app):
-                continue
-            _ordered_apps.append(ordered_apps_dict.get(order_app))
-        available_apps = _ordered_apps + un_ordered_apps
-
-    for app in available_apps:
-        if app.get('app_label') == 'django_admin_settings':
-            app['icon'] = 'fa-gear'
-            if request.user.has_perm('django_admin_settings.add_options') or \
-                    request.user.has_perm(
-                        'django_admin_settings.change_options'):
-                app.get('models').insert(0, {
-                    'name': _('General Options'),
-                    'object_name': 'Options',
-                    'perms':
-                        {
-                            'add': True,
-                            'change': True,
-                            'delete': True,
-                            'view': True
-                        },
-                    'admin_url': reverse(
-                        'admin:general_option'),
-                    'view_only': False,
-                })
-        else:
-            # setup app icon
-            app['icon'] = adminlte_settings.get('apps', {}).get(app['app_label'], {}).get('icon')
-
-            if adminlte_settings.get('apps', {}).get(app['app_label'], {}).get('models'):
-                # order by models
-                ordered_models = adminlte_settings.get('apps', {}).get(app['app_label'], {}).get('models').keys()
-                ordered_models_dict = {}
-                un_ordered_models = []
-                for model in app.get('models', []):
-                    if model.get('object_name').lower() in ordered_models:
-                        ordered_models_dict[model.get('object_name').lower()] = model
-                    else:
-                        un_ordered_models.append(model)
-
-                _ordered_models = []
-                # fix model in ADMINLTE_SETTINGS but current_user has not perm
-                for order_model in ordered_models:
-                    if not ordered_models_dict.get(order_model):
-                        continue
-                    _ordered_models.append(ordered_models_dict.get(order_model))
-                app['models'] = _ordered_models + un_ordered_models
-
-            for model in app.get('models', []):
-                # setup model icon
-                model['icon'] = adminlte_settings. \
-                    get('apps', {}). \
-                    get(app['app_label'], {}). \
-                    get('models', {}). \
-                    get(model['object_name'].lower(), {}). \
-                    get('icon')
-
-    return available_apps
+    adminlte_config = get_adminlte_config_class()
+    if position == 'main':
+        menu = adminlte_config.build_main_menu(request, available_apps)
+    else:
+        menu = adminlte_config.build_top_menu(request, available_apps)
+    return menu
 
 
 def get_admin_site(current_app):
