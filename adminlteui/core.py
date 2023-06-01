@@ -3,8 +3,8 @@ from typing import Literal, List
 
 class MenuItem(object):
     def __init__(self, label: str, name: str = None, url=None,
-                 icon: str = 'fa-bars',
-                 menu_type: Literal['group', 'model', 'link'] = None,
+                 icon: str = 'fa-circle-o',
+                 menu_type: Literal['group', 'model', 'link'] = 'group',
                  child: List = None, target_blank: bool = False,
                  permissions: List = None):
         self.name = name
@@ -39,14 +39,22 @@ class MenuItem(object):
         if self.child:
             child_list = []
             for child in self.child:
-                child_list.append(child.make(models))
+                child_list.append(child.make(request, models))
             menu_item['child'] = child_list
         return menu_item
 
 
-class AdminLteUiConfig(object):
+class AdminLteConfig(object):
     main_menu = []
     top_menu = []
+    show_avatar = False
+    avatar_field = 'request.user.avatar'
+
+    site_logo = '/static/admin/dist/img/default-log.svg'
+    site_header = 'AdminLteUI'
+
+    search_form = True
+    copyright = None
 
     @staticmethod
     def get_models(app_list):
@@ -84,6 +92,6 @@ class AdminLteUiConfig(object):
             return []
         menu = []
         models = self.get_models(app_list)
-        for menu_item in self.main_menu:
+        for menu_item in self.top_menu:
             menu.append(menu_item.make(request, models))
         return menu
