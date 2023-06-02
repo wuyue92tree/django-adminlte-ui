@@ -16,7 +16,7 @@ class MenuItem(object):
         self.target_blank = target_blank
         self.permissions = permissions
 
-    def make(self, request, models=None):
+    def make(self, request, models=None, deep=1, deep_limit=0):
         menu_item = {'name': self.name, 'icon': self.icon, 'label': self.label}
         if self.child and self.menu_type != 'group':
             raise Exception(
@@ -33,14 +33,28 @@ class MenuItem(object):
             menu_item['url'] = model.get('admin_url')
         elif self.menu_type == 'link':
             menu_item['url'] = self.url
+        else:
+            # menu_type: group and child is empty will hide the menu
+            if not self.child:
+                return None
+
+        if menu_item.get('name') is None:
+            # setup name as label when name is None
+            menu_item['name'] = menu_item['label']
 
         menu_item['target_blank'] = self.target_blank
 
         if self.child:
-            child_list = []
-            for child in self.child:
-                child_list.append(child.make(request, models))
-            menu_item['child'] = child_list
+            if deep_limit == 0 or deep <= deep_limit:
+                child_list = []
+                for child in self.child:
+                    deep += 1
+                    child_menu = child.make(request, models, deep, deep_limit)
+                    if child_menu:
+                        child_list.append(child_menu)
+                menu_item['child'] = child_list
+            else:
+                return None
         return menu_item
 
 
@@ -86,15 +100,25 @@ class AdminLteConfig(object):
         menu = []
         models = self.get_models(app_list)
         for menu_item in self.main_menu:
-            menu.append(menu_item.make(request, models))
+            menu_item_ = menu_item.make(request, models)
+            if menu_item_:
+                menu.append(menu_item_)
         return menu
 
     def build_top_menu(self, request, app_list):
+        """
+        top menu deep_limit force to 2
+        :param request:
+        :param app_list:
+        :return:
+        """
         if not self.top_menu:
             # if main_menu is not setup, keep empty
             return []
         menu = []
         models = self.get_models(app_list)
         for menu_item in self.top_menu:
-            menu.append(menu_item.make(request, models))
+            menu_item_ = menu_item.make(request, models, deep_limit=2)
+            if menu_item_:
+                menu.append(menu_item_)
         return menu

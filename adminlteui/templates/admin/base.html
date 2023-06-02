@@ -82,16 +82,7 @@
                 <div class="navbar-custom-menu" style="float: left;">
                     <ul class="nav navbar-nav top-menu">
                         {% get_menu request 'top' as menu %}
-                        {% if nemu %}
-                            {% for menu_item in menu %}
-                                <li class="dropdown user user-menu">
-                                    <a href="{{ menu_item.url }}">
-                                        <i class="fa {{menu_item.icon}}"></i>
-                                        {{ menu_item.name }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
+                        {{ menu | safe }}
                     </ul>
                 </div>
 
@@ -213,30 +204,7 @@
                         </a>
                     </li>
                     {% get_menu request as menu %}
-                    {% if menu %}
-                        {% for menu_item in menu %}
-                            <li {% if not menu_item.url %}class="treeview"{% endif %}>
-                                <a href="{% if menu_item.url %}{{menu_item.url}}{% else %}javascript:void(0){% endif %}">
-                                    <i class="fa {{menu_item.icon}}"></i>
-                                    <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ menu_item.name }}</span>
-                                    {% if not menu_item.url %}
-                                        <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    {% endif %}
-                                </a>
-                                {% if not menu_item.url %}
-                                    <ul class="treeview-menu">
-                                        {% for child in menu_item.child %}
-                                            {% if child.url %}
-                                                <li><a href="{{ child.url }}" ><i class="fa {{child.icon}}"></i>{{ child.name }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    {% endif %}
+                    {{ menu | safe }}
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -476,9 +444,8 @@
     // use js control active status of siderbar-menu
     $(function() {
         var menuActions = document.querySelectorAll('.sidebar-menu a')
+        var pathname = document.querySelector('#adminIndex').pathname
         for (var i in menuActions) {
-            var pathname = document.querySelector('#adminIndex').pathname
-
             try {
                 if (window.location.pathname === pathname) {
                     menuActions[i].parentNode.setAttribute('class', 'active')
@@ -491,9 +458,18 @@
                     }
                     console.log('menu matched.', window.location.href, menuActions[i].href);
                     menuActions[i].parentNode.setAttribute('class', 'active');
-                    if (menuActions[i].parentNode.parentNode.getAttribute('class') !== 'sidebar-menu') {
-                        menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
-                        menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
+
+                    let parent = menuActions[i].parentNode;
+                    while (true) {
+                        if (parent.parentNode.getAttribute('class') !== 'sidebar-menu tree') {
+                            if (parent.parentNode.getAttribute('class').indexOf('treeview-menu') !== -1) {
+                                parent.parentNode.setAttribute('class', 'treeview-menu menu-open');
+                                parent.parentNode.parentNode.setAttribute('class', 'treeview active');
+                            }
+                            parent = parent.parentNode;
+                        } else {
+                            break
+                        }
                     }
                     break
                 }
@@ -506,11 +482,12 @@
         for (var j in topMenuActions) {
             if (window.location.href.indexOf(topMenuActions[j].href) !== -1) {
                 topMenuActions[j].parentNode.setAttribute('class', 'active');
+                if (topMenuActions[j].parentNode.parentNode.getAttribute('class') === 'dropdown-menu') {
+                    topMenuActions[j].parentNode.parentNode.parentNode.setAttribute('class', 'dropdown active');
+                }
                 console.log('top menu matched.', window.location.href, topMenuActions[j].href);
             }
         }
-
-
     })
 </script>
 
