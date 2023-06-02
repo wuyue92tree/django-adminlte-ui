@@ -26,7 +26,8 @@ class MenuItem(object):
             if models is None:
                 raise Exception('models must setup when menu_type="model".')
             if self.label not in models.keys():
-                raise Exception(f'got an invalid label for model: {self.label}')
+                # label not in models will hide menu when menu_type equal model
+                return None
             model = models.get(self.label)
             if not self.name:
                 menu_item['name'] = model.get('name')
