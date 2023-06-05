@@ -69,6 +69,7 @@ class AdminLteConfig(object):
     site_logo = None
 
     skin = None
+    sidebar_layout: Literal['boxed', 'fixed'] = 'fixed'
 
     search_form = True
     copyright = None
