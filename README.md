@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/wuyue92tree/django-adminlte-ui">
-    <img alt="title" src="./images/django-adminlte-ui.jpg" width="400">
+    <img alt="title" src="docs/assets/images/django-adminlte-ui.jpg" width="400">
   </a>
 </p>
 
@@ -39,32 +39,6 @@ INSTALLED_APPS = [
 ]
 ```
 
-# Screen shot
-
-## login page
-![login](./images/login.jpg)
-
-## dashboard
-![dashboard](./images/dashboard.jpg)
-
-## table list
-![table list](./images/table-list.jpg)
-
-## form page
-![form page](./images/form.png)
-
-
-# Features
-
-- [Custom General Option](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#general-option)
-- [Widgets](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#widgets)
-- [Custom Menu](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#menu)
-
-# Todo
-
-- Custom Dashboard
-
-
 # Thanks
 
 - [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
@@ -77,6 +51,6 @@ Your donation take me higher. 🚀
 
 <p align="left">
   <a href="https://github.com/wuyue92tree/django-adminlte-ui">
-    <img alt="title" src="./images/alipay.png" width="200px">
+    <img alt="title" src="docs/assets/images/alipay.png" width="200px">
   </a>
 </p>

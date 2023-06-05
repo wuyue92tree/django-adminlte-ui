@@ -23,10 +23,3 @@ setup
         'django.contrib.auth',
         ...
     ]
-
-Init models
-===========
-
-::
-
-    python manage.py migrate django_admin_settings
