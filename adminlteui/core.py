@@ -1,4 +1,9 @@
-from typing import Literal, List
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
+
+from typing import List
 
 
 class MenuItem(object):
@@ -59,7 +64,7 @@ class MenuItem(object):
         return menu_item
 
 
-class AdminLteConfig(object):
+class AdminlteConfig(object):
     main_menu = []
     top_menu = []
     show_avatar = False

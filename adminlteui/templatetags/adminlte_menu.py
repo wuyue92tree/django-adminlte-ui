@@ -1,5 +1,4 @@
 import logging
-from typing import Literal
 import django
 from django import template
 from django.contrib.admin import AdminSite
@@ -7,8 +6,13 @@ from django.http import HttpRequest
 from adminlteui.templatetags.adminlte_core import get_adminlte_config_class
 
 try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
+
+try:
     from django.urls import reverse, resolve
-except:
+except ImportError:
     from django.core.urlresolvers import reverse, resolve
 
 register = template.Library()
@@ -17,6 +21,7 @@ if django.VERSION < (1, 9):
     simple_tag = register.assignment_tag
 else:
     simple_tag = register.simple_tag
+
 
 def render_main_menu(menu):
     if not menu:
@@ -110,6 +115,7 @@ def get_menu(context, request, position: Literal['main', 'top'] = 'main'):
         menu = adminlte_config.build_top_menu(request, available_apps)
         menu_html = render_top_menu(menu)
     return menu_html
+
 
 def get_admin_site(current_app):
     """
