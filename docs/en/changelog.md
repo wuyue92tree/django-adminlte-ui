@@ -96,7 +96,3 @@
 - add pages [ delete_selected_confirmation.html，add object_history.html，404.html，500.html]；
 - update layout when fieldset.name is not none；
 - update support default block extrahead extrastyle。
-
-# FAQ
-
-nothing

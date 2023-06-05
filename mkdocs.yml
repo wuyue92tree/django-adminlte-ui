@@ -1,6 +1,37 @@
 site_name: django-adminlte-ui
+site_url: https://wuyue92tree.github.io/django-adminlte-ui
+repo_url: https://github.com/wuyue92tree/django-adminlte-ui
+
 nav:
-- Home: index.md
-- Guide: guide.md
-- About: about.md
-#theme: readthedocs
+- Home: en/index.md
+- Guide: en/guide.md
+- ChangeLog: en/changelog.md
+- FAQ: en/faq.md
+theme:
+  name: material
+  font: false
+  icon:
+    logo: material/file-document-multiple
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/wuyue92tree/django-adminlte-ui
+      name: django-adminlte-ui on Github
+  version:
+    provider: mike
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: folder
+      languages:
+        en: English
+        zh: 简体中文
+      default_language: en
+      nav_translations:
+        zh:
+          Home: 主页
+          Guide: 指南
+          ChangeLog: 更新日志
+          FAQ: FAQ
