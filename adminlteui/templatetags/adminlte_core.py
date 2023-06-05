@@ -1,7 +1,7 @@
 import importlib
 from django import template
 from adminlteui import version
-from adminlteui.core import AdminLteConfig
+from adminlteui.core import AdminlteConfig
 from django.conf import settings
 
 register = template.Library()
@@ -14,11 +14,11 @@ def get_adminlte_config_class():
         c = settings.ADMINLTE_CONFIG_CLASS.split('.')[-1]
         module = importlib.import_module(m)
         class_ = getattr(module, c)
-        if not isinstance(class_(), AdminLteConfig):
+        if not isinstance(class_(), AdminlteConfig):
             raise Exception(f'invalid AdminLteConfig class: {c}.')
         return class_()
     else:
-        return AdminLteConfig()
+        return AdminlteConfig()
 
 
 @register.simple_tag
