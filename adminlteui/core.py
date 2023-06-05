@@ -49,6 +49,7 @@ class MenuItem(object):
             menu_item['name'] = menu_item['label']
 
         menu_item['target_blank'] = self.target_blank
+        menu_item['menu_type'] = self.menu_type or 'group'
 
         if self.child:
             if deep_limit == 0 or deep <= deep_limit:
@@ -57,6 +58,10 @@ class MenuItem(object):
                     deep += 1
                     child_menu = child.make(request, models, deep, deep_limit)
                     if child_menu:
+                        # menu_type: group and child is empty will hide the menu
+                        if child_menu.get('menu_type', 'group') == 'group':
+                            if len(child_menu.get('child')) == 0:
+                                continue
                         child_list.append(child_menu)
                 menu_item['child'] = child_list
             else:
@@ -109,6 +114,10 @@ class AdminlteConfig(object):
         for menu_item in self.main_menu:
             menu_item_ = menu_item.make(request, models)
             if menu_item_:
+                # menu_type: group and child is empty will hide the menu
+                if menu_item_.get('menu_type', 'group') == 'group':
+                    if len(menu_item_.get('child')) == 0:
+                        continue
                 menu.append(menu_item_)
         return menu
 
@@ -127,5 +136,9 @@ class AdminlteConfig(object):
         for menu_item in self.top_menu:
             menu_item_ = menu_item.make(request, models, deep_limit=2)
             if menu_item_:
+                # menu_type: group and child is empty will hide the menu
+                if menu_item_.get('menu_type', 'group') == 'group':
+                    if len(menu_item_.get('child')) == 0:
+                        continue
                 menu.append(menu_item_)
         return menu
