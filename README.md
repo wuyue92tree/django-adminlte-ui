@@ -8,8 +8,8 @@
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://github.com/wuyue92tree/django-adminlte-ui/workflows/main/badge.svg)](https://github.com/wuyue92tree/django-adminlte-ui/workflows/main/badge.svg)
-[![Documentation Status](https://readthedocs.org/projects/django-adminlte-ui/badge/?version=latest)](https://django-adminlte-ui.readthedocs.io/en/latest/?badge=latest)
-[![Gitter](https://badges.gitter.im/django-adminlte-ui/community.svg)](https://gitter.im/django-adminlte-ui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-brightgreen.svg)](https://wuyue92tree.github.io/django-adminlte-ui/)
+[![Gitter](https://img.shields.io/discord/K9VH3x6T?color=7289DA&logo=discord&logoColor=white)](https://discord.gg/K9VH3x6T)
 
 django admin theme base on adminlte
 
@@ -20,17 +20,6 @@ adminlte version: 2.4.18
 - if you have good ideas, just contact me.
 - if you find some bug, just add an issue.
 - if you think this project is good, just star and fork, make it better 🍉.
-
-# Demo
-
-[Chinese](http://django-demo.antio.top/zh-hans/admin/)
-
-[English](http://django-demo.antio.top/en/admin/)
-
-- username: demo
-- password: demo123
- 
-database will restore every hour. 🍌
 
 # Install
 
