@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.x/</loc>
+         <lastmod>2023-06-05</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/en/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/zh/"/>
+         
+    </url>
+    <url>
+         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.x/changelog/</loc>
+         <lastmod>2023-06-05</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/en/changelog/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/zh/changelog/"/>
+         
+    </url>
+    <url>
+         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.x/faq/</loc>
+         <lastmod>2023-06-05</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/en/faq/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/zh/faq/"/>
+         
+    </url>
+    <url>
+         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.x/guide/</loc>
+         <lastmod>2023-06-05</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/en/guide/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/2.x/zh/guide/"/>
+         
+    </url>
+</urlset>
