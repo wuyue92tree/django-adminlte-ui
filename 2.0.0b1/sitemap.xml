@@ -9,11 +9,19 @@
          
     </url>
     <url>
-         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.0.0b1/about/</loc>
+         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.0.0b1/changelog/</loc>
          <lastmod>2023-06-05</lastmod>
          <changefreq>daily</changefreq>
-         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/en/about/"/>
-         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/zh/about/"/>
+         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/en/changelog/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/zh/changelog/"/>
+         
+    </url>
+    <url>
+         <loc>https://wuyue92tree.github.io/django-adminlte-ui/2.0.0b1/faq/</loc>
+         <lastmod>2023-06-05</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://wuyue92tree.github.io/django-adminlte-ui/en/faq/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="https://wuyue92tree.github.io/django-adminlte-ui/zh/faq/"/>
          
     </url>
     <url>
