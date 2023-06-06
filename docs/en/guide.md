@@ -18,7 +18,7 @@ support options:
 this options in your db, named `django_admin_settings_options`, after do migrate.
 
 you can also add your custom option into this table, and use it by templatetags
- `adminlte_options` with function `get_adminlte_option`.
+`adminlte_options` with function `get_adminlte_option`.
 
 options table has a valid field to control your option work or not.
 
