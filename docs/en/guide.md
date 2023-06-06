@@ -1,282 +1,147 @@
-# Guides
+# Guide
 
-## General Option
+## Simple Example
+inherit `adminlte.core.AdminlteConfig`，and add `ADMINLTE_CONFIG_CLASS` in django settings
+### Inherit AdminlteConfig
+```python title='adminlte_config.py'
+# myserver/utils/adminlte_config.py
+from adminlteui.core import AdminlteConfig
 
-dynamic setup your site base on table `django_admin_settings_options`.
-
-support options:
-
-- Site Title
-- Site Header
-- Site Logo
-- Welcome Sign
-- Avatar Field
-- Show Avatar
-
-## Options
-
-this options in your db, named `django_admin_settings_options`, after do migrate.
-
-you can also add your custom option into this table, and use it by templatetags
-`adminlte_options` with function `get_adminlte_option`.
-
-options table has a valid field to control your option work or not.
-
-
-example:
-
+class MyAdminlteConfig(AdminlteConfig):
+    skin = 'red'
+    welcome_sign = 'welcome to xxx backend system'
+    ...
 ```
-# adminlte/general_option.html
-
-{% load adminlte_options %}
-
-# here my option_name is site_title, you can custom yourself.
-{% get_adminlte_option 'site_title' as adminlte_site_title %}
-{% if adminlte_site_title.valid %}
-{{ adminlte_site_title.site_title }}
-{% else %}
-{{ site_title|default:_('Django site admin') }}
-{% endif %}
-
+### Settings in django
+```python title='settings.py'
+ADMINLTE_CONFIG_CLASS = 'myserver.utils.adminlte_config.MyAdminlteConfig'
 ```
 
-before custom option, you should known what adminlte has used.
+## Params
+### Basic Info
+#### show_avatar
+show avatar or not，default is `False`
+#### avatar_field
+avatar field or url，default is `None`，will render as `adminlteui/static/admin/dist/img/default.jpg`
+#### username_field
+username fields，default is `None`，will render as `request.user.username`
+#### site_logo
+site logo，default is `None`，will render as `adminlteui/static/admin/dist/img/default-log.svg`
+#### skin
+site skin，default is `None`，will render as `blue`
+#### sidebar_layout
+sidebar layout，default is `fixed`，choices：['boxed', 'fixed']
+#### search_form
+show search form or not，default is `True`
+#### copyright
+copyright，default is `None`，will render as django-adminlte-ui version
+#### welcome_sign
+welcome sign（login page），default is `None`，will render as 'Login and Enjoy'
+### Menu
+Menu inherit `adminlte.core.MenuItem`，you can modify the left menu and top menu
 
-- site_title
-- site_header
-- site_logo
-- welcome_sign
-- USE_CUSTOM_MENU
-- avatar_field
-- show_avatar
+MenuItem has three type of `menu_type`
+
+- group：Group，you can make two or more MenuItem(`model` or `link`) in side the same menu level
+- model：bind model which registered in admin by label，label like `app_label.modelName`
+- link：normal link type，setup url direct
+
+example
+```python title='adminlte_config.py'
+from adminlte.core import MenuItem
+
+class MyAdminlteConfig(AdminlteConfig):
+    main_menu = [
+        MenuItem(label='rpa', name='RPA服务', child=[
+            MenuItem(label='rpa.Collector', menu_type='model'),
+            MenuItem(label='third', name='三级菜单', child=[
+                MenuItem(label='github', name='Github', url='https://github.com/wuyue92tree', target_blank=True, menu_type='link'),
+            ]),
+        ]),
+        MenuItem(label='auth', name='认证和授权', icon='fa-users', child=[
+            MenuItem(label='auth.User', name='用户', menu_type='model'), # (1)
+            MenuItem(label='auth.Group', name='组', menu_type='model'),
+        ]),
+    ]
+    top_menu = [
+        MenuItem(label='outside_link', name='外部资源', child=[
+            MenuItem(label='github', name='Github', url='https://github.com/wuyue92tree', target_blank=True, menu_type='link'),
+        ]),
+        MenuItem(label='rpa.Collector', menu_type='model'),
+    ]
+```
+
+effect
+
+![menu](../assets/images/menu.png)
+
+1. when menu_type is model，if name not setup, will show the model verbose_name
+
+#### main_menu
+main menu（left menu），default is `[]`，will render as all registered model in admin
+> Tips: Support multilevel menu
+#### top_menu
+top menu，default is `[]`，will show nothing
+> Tips: Top menu will not show icon，only support secondary menu max
 
 ## ModelAdmin
-- make change_list filter support select2
-- custom placeholder for search_fields
+external ModelAdmin in django
 
-```python
-# adminlte/admin.py
-class ModelAdmin(admin.ModelAdmin):
-  select2_list_filter = ()
-  search_field_placeholder = ''
+- make table filter support `select2` in `change_list` page
+- custom search field placeholder for `change_list` page
 
-  class Media:
-    css = {
-      "all": ("admin/components/select2/dist/css/select2.min.css",)
-    }
-    js = (
-      "admin/components/select2/dist/js/select2.min.js",
-    )
+example
+```python title='admin.py'
+from adminlte.admin import ModelAdmin
 
-  def changelist_view(self, request, extra_context=None):
-    view = super().changelist_view(request, extra_context)
-    cl = view.context_data.get('cl')
-    cl.search_field_placeholder = self.search_field_placeholder
-    filter_specs = cl.filter_specs
-
-    for index, filter_spec in enumerate(filter_specs):
-      if filter_spec.field_path in self.select2_list_filter:
-        # flag to use select2
-        filter_spec.display_select2 = True
-        cl.filter_specs[index] = filter_spec
-    view.context_data['cl'] = cl
-    return view
+class CollectorModelAdmin(ModelAdmin):
+  select2_list_filter = ('project', 'source') # (1)
+  search_field_placeholder = '描述/起始URL' # (2)
+  ...
 ```
+
+1. add field in to this tuple which need select2 filter
+2. setup placeholder for search field
+
+effect
+
+![modeladmin](../assets/images/modeladmin.png)
 
 ## Widgets
 
 ### AdminlteSelect
 
-> Since v1.5.0b0, you don't need modify new template to active select2.
+> Since v1.5.0b0, you don't need to modify new template to active select2.
 
 example:
-```
-# adminlte/admin.py
-@admin.register(Menu)
-class MenuAdmin(TreeAdmin):
+```python title='rpa/admin.py'
+@admin.register(Collector)
+class CollectorAdmin(admin.ModelAdmin):
     ...
-    # change_form_template = 'adminlte/menu_change_form.html'
     formfield_overrides = {
         models.ForeignKey: {'widget': AdminlteSelect}
     }
-
-# adminlte/menu_change_form.html
-# active the target select
-# {% extends 'admin/change_form.html' %}
-
-# {% block extrajs %}
-# {{ block.super }}
-# <script>
-#     django.jQuery('#id_content_type').select2();
-# </script>
-# {% endblock %}
 ```
 effect:
 
-![adminlte_select](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/adminlte_select.png?raw=true)
+![adminlte_select](../assets/images/adminlte_select.png)
 
 ### AdminlteSelectMultiple
 
-> Since v1.5.0b0, you don't need modify new template to active select2.
+> Since v1.5.0b0, you don't need to modify new template to active select2.
 
 example:
-```
-# adminlte/admin.py
-@admin.register(Menu)
-class MenuAdmin(TreeAdmin):
+```python title='rpa/admin.py'
+@admin.register(Collector)
+class CollectorAdmin(admin.ModelAdmin):
     ...
-    # change_form_template = 'adminlte/menu_change_form.html'
     formfield_overrides = {
         # multiple for ManayToManyField
         models.ManayToManyField: {'widget': AdminlteSelectMultiple(
             attr={'style': 'width: 100%'}
         )}
     }
-
-# adminlte/menu_change_form.html
-# active the target select
-# {% extends 'admin/change_form.html' %}
-
-# {% block extrajs %}
-# {{ block.super }}
-# <script>
-#     django.jQuery('#id_content_type').select2();
-# </script>
-# {% endblock %}
 ```
 effect:
 
-![adminlte_select](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/adminlte_select_multiple.png?raw=true)
-
-
-
-## Menu
-
-Custom your menu depends on database && treebeard.
-
-`depth 2` only, more will not effective now.
-
-### Menu Setting
-
-Exchange Menu by click the `Exchange Menu` button
-
-![menu list](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/menu-list.png?raw=true)
-
-### Menu Form
-
-![menu form](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/menu-form.png?raw=true)
-
-- name: The menu name
-- position: The position of your custom menu, default `left`
-- link_type:
-    1. internal: django urls
-    2. external: third part urls
-    3. divide: link divide, like app verbose_name.
-- link:
-    1. `admin:index`: django url name, recommend.
-    2. `/admin/`: django internal url, if you use i18n url, it's not a good choice.
-    3. `http://`: outside url
-- icon: [icon](https://adminlte.io/themes/AdminLTE/pages/UI/icons.html)
-- content_type: Use for permission control, if user don't have permission to access the `app_label:model` in content_type, it will be skipped.
-- valid: This menu item effective only when the valid is True.
-- priority_level: default 100, use for ordering. `The bigger the priority`
-- treebeard option: for order.
-
-### get django url name for link
-
-```
-
-╰─$ python manage.py shell
-Python 3.6.6 (default, Sep 29 2018, 19:18:41) 
-Type 'copyright', 'credits' or 'license' for more information
-IPython 7.5.0 -- An enhanced Interactive Python. Type '?' for help.
-
-In [1]: from django.urls import resolve                                                                                                                                             
-
-In [2]: resolve('/zh-hans/admin/video/parsed/')                                                                                                                                     
-Out[2]: ResolverMatch(func=django.contrib.admin.options.changelist_view, args=(), kwargs={}, 
-url_name=video_parsed_changelist, app_names=['admin'], namespaces=['admin'], route=zh-hans/admin/video/parsed/)
-
-```
-
-django url name = namespaces:url_name
-
-## settings
-in your setting.py `ADMINLTE_SETTINGS`
-
-### demo
-Misleading demo features disabling/enabling
-```python
-ADMINLTE_SETTINGS = {
-    'demo': True,
-}
-```
-
-### search_form
-Search form disabling/enabling
-
-```python
-ADMINLTE_SETTINGS = {
-    'search_form': True,
-}
-```
-
-### skin
-Skin choice
-```python
-ADMINLTE_SETTINGS = {
-    'skin': True,
-}
-```
-
-### copyright
-Customer-specific copyright notice
-```python
-ADMINLTE_SETTINGS = {
-    'copyright': 'John Smith',
-}
-```
-
-### navigation_expanded
-Navigation expanded feature, making navigation elements not being hidden under openable menu
-```python
-ADMINLTE_SETTINGS = {
-    'navigation_expanded': True,
-}
-```
-
-### show_apps
-```python
-ADMINLTE_SETTINGS = {
-    'show_apps': ['django_admin_settings', 'auth', 'main'],
-}
-```
-### main_navigation_app
-Main navigation app feature, where app models are put on top of the menu
-```python
-ADMINLTE_SETTINGS = {
-    'main_navigation_app': 'django_admin_settings',
-}
-```
-
-### apps
-Modify apps icon & order apps/models
-
-```python
-ADMINLTE_SETTINGS = {
-    'apps': {
-        'example-app': {
-            'icon': 'fa-desktop',
-            'models': {
-                'example-model': {
-                    'icon': 'fa-archive'
-                },
-                'example-model1': {}
-            }
-        },
-        'auth': {
-            'icon': 'fa-users'
-        }
-    }
-}
-```
+![adminlte_select](../assets/images/adminlte_select_multiple.png)

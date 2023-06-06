@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 
 ## Features
 
-- [Custom General Option](/django-adminlte-ui/2.x/guide/#general-option)
+- [Custom General Option](/django-adminlte-ui/2.x/guide/#basic-info)
 - [Widgets](/django-adminlte-ui/2.x/guide/#widgets)
 - [Custom Menu](/django-adminlte-ui/2.x/guide/#menu)
 

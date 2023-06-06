@@ -12,6 +12,15 @@ theme:
   font: false
   icon:
     logo: material/file-document-multiple
+  features:
+    - content.code.copy
+    - content.code.annotate
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
 extra:
   social:

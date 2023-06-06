@@ -1,4 +1,4 @@
-# Welcome to django-adminlte-ui
+# 欢迎使用 django-adminlte-ui
 
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
@@ -52,9 +52,9 @@ INSTALLED_APPS = [
 
 ## 功能
 
-- [自定义属性](/django-adminlte-ui/2.x/zh/guide/#general-option)
+- [自定义属性](/django-adminlte-ui/2.x/zh/guide/#_4)
 - [Widget组件](/django-adminlte-ui/2.x/zh/guide/#widgets)
-- [自定义菜单](/django-adminlte-ui/2.x/zh/guide/#menu)
+- [自定义菜单](/django-adminlte-ui/2.x/zh/guide/#_5)
 
 
 ## 鸣谢
