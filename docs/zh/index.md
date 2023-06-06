@@ -3,39 +3,31 @@
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://github.com/wuyue92tree/django-adminlte-ui/workflows/main/badge.svg)](https://github.com/wuyue92tree/django-adminlte-ui/workflows/main/badge.svg)
-[![Gitter](https://badges.gitter.im/django-adminlte-ui/community.svg)](https://gitter.im/django-adminlte-ui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-brightgreen.svg)](https://wuyue92tree.github.io/django-adminlte-ui/)
+[![Discord](https://img.shields.io/discord/K9VH3x6T?color=7289DA&logo=discord&logoColor=white)](https://discord.gg/K9VH3x6T)
 
 
-django-adminlte is a django admin theme base on adminlte
+django-adminlte 是一个基于adminlte的django后台管理系统主题
 
-adminlte version: 2.4.18
+adminlte 版本: 2.4.18
 
+> 从 v2.0.0 版本开始, django-adminlte移除了所有除django以外的依赖包.
 
-## Helper
+老版本(1.x)文档: [点击](https://django-adminlte-ui.readthedocs.io/)
 
-- if you have good ideas, just contact me.
-- if you find some bug, just add an issue.
-- if you think this project is good, just star and fork, make it better 🍉.
+## 帮助进步
 
-## Demo
+- 如果你有好的点子，请联系我
+- 如果你发现了碧油鸡，请添加 issue.
+- 如果你认为这个项目不错，请不要吝啬您的start，积极fork，让项目更好吧🍉
 
-[Chinese](http://django-demo.antio.top/zh-hans/admin/)
-
-[English](http://django-demo.antio.top/en/admin/)
-
-- username: demo
-- password: demo123
-
-database will restore every hour. 🍌
-
-
-## Install
+## 安装
 
 ```
 pip install django-adminlte-ui
 ```
 
-## Setup
+## 设置
 
 ```
 # settings.py
@@ -43,58 +35,30 @@ pip install django-adminlte-ui
 INSTALLED_APPS = [
     'adminlteui',
     'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # custom menu base on treebeard
-    'treebeard',
     ...
 ]
 ```
 
-## Init models
-```
-python manage.py migrate django_admin_settings
-```
-## Screen shot
+## 截图
 
-### login page
-![login](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/login.jpg?raw=true)
+### 登录页
+![login](../assets/images/login.jpg)
 
-### dashboard
-![dashboard](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/dashboard.jpg?raw=true)
+### 仪表盘
+![dashboard](../assets/images/dashboard.jpg)
 
-### table list
-![table list](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/table-list.jpg?raw=true)
+### table列表
+![table list](../assets/images/table-list.jpg)
 
-### form page
-![form page](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/form.png?raw=true)
+## 功能
 
-### general_option
-![general_option](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/general_option.jpg?raw=true)
-
-### menu list
-![menu list](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/menu-list.png?raw=true)
+- [自定义属性](/django-adminlte-ui/2.x/zh/guide/#general-option)
+- [Widget组件](/django-adminlte-ui/2.x/zh/guide/#widgets)
+- [自定义菜单](/django-adminlte-ui/2.x/zh/guide/#menu)
 
 
-## Features
-
-- [Custom General Option](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#general-option)
-- [Widgets](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#widgets)
-- [Custom Menu](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#menu)
-
-## Todo
-
-- Custom Dashboard
-
-
-## Thanks
+## 鸣谢
 
 - [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
 - [django](https://github.com/django/django)
-- [django-treebeard](https://github.com/django-treebeard/django-treebeard)
 - [django-suit](https://github.com/darklow/django-suit)
