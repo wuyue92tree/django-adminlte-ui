@@ -61,6 +61,7 @@ class MyAdminlteConfig(AdminlteConfig):
         MenuItem(label='auth', name='认证和授权', icon='fa-users', child=[
             MenuItem(label='auth.User', name='用户', menu_type='model'), # (1)
             MenuItem(label='auth.Group', name='组', menu_type='model'),
+            MenuItem(label='auth.link', name='/admin/auth/', menu_type='link', permissions=['auth.view_user']), # (2)
         ]),
     ]
     top_menu = [
@@ -76,6 +77,7 @@ effect
 ![menu](../assets/images/menu.png)
 
 1. when menu_type is model，if name not setup, will show the model verbose_name
+2. when menu_type is link, you can control menu show or not show by bind model permission, `permissions` default None, will not check permission
 
 #### main_menu
 main menu（left menu），default is `[]`，will render as all registered model in admin

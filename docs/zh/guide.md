@@ -61,6 +61,7 @@ class MyAdminlteConfig(AdminlteConfig):
         MenuItem(label='auth', name='认证和授权', icon='fa-users', child=[
             MenuItem(label='auth.User', name='用户', menu_type='model'), # (1)
             MenuItem(label='auth.Group', name='组', menu_type='model'),
+            MenuItem(label='auth.link', name='/admin/auth/', menu_type='link', permissions=['auth.view_user']), # (2)
         ]),
     ]
     top_menu = [
@@ -76,6 +77,7 @@ class MyAdminlteConfig(AdminlteConfig):
 ![menu](../assets/images/menu.png)
 
 1. menu_type类型为model时，若不指定name，则默认显示为原model的verbose_name
+2. menu_type类型为link时，可以通过绑定模型权限，控制menu的显示，`permissions`默认为空，不进行权限检测
 
 #### main_menu
 主菜单（左侧菜单），默认为`[]`，将渲染为所有已注册到admin中的model
