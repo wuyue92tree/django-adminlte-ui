@@ -39,6 +39,10 @@ class MenuItem(object):
             menu_item['url'] = model.get('admin_url')
         elif self.menu_type == 'link':
             menu_item['url'] = self.url
+            # check permissions when permissions are not None
+            if self.permissions:
+                if request.user.has_perms(self.permissions) is False:
+                    return None
         else:
             # menu_type: group and child is empty will hide the menu
             if not self.child:
