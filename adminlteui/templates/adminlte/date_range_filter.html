@@ -10,6 +10,13 @@
         $(document).ready(function () {
             var $drp_input = $('#id_filter_{{ field_name }}');
             // initialize date range picker widget
+            {% if LANGUAGE_CODE != 'en-us' %}
+                {% if LANGUAGE_CODE != 'zh-hans' %}
+                    moment.locale('{{ LANGUAGE_CODE }}');
+                {% else %}
+                    moment.locale('zh-CN');
+                {% endif %}
+            {% endif %}
             $drp_input.daterangepicker(
                 {
                     locale: {
