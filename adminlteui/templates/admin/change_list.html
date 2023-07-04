@@ -59,16 +59,8 @@
                     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
                         <div class="row" style="margin-bottom: 15px;">
                             {% block search %}
-                            <div class="col-md-10 col-sm-12 col-xs-12" id="toolbar">
+                            <div class="col-sm-12 col-xs-12" id="toolbar">
                                 {% search_form cl %}
-                            </div>
-                            {% endblock %}
-
-                            {% block object-tools %}
-                            <div {% if cl.has_filters or cl.search_fields %}class="col-md-2 col-sm-12 col-xs-12 text-right"{% else %}class="col-md-12 text-right"{% endif %}>
-                                {% block object-tools-items %}
-                                {% change_list_object_tools %}
-                                {% endblock %}
                             </div>
                             {% endblock %}
                         </div>
@@ -84,7 +76,18 @@
                             {% endif %}
 
                             {% block result_list %}
-                            {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+                            <div class="row">
+                                {% if action_form and actions_on_top and cl.show_admin_actions %}
+                                    <div class="col-md-6">{% admin_actions %}</div>
+                                {% endif %}
+                                {% block object-tools %}
+                                    <div {% if action_form and actions_on_top and cl.show_admin_actions %}class="col-md-6 text-right"{% else %}class="col-md-12 text-right"{%endif%}>
+                                        {% block object-tools-items %}
+                                            {% change_list_object_tools %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            </div>
                             {% result_list cl %}
                             {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
                             {% endblock %}

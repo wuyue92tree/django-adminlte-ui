@@ -1,0 +1,74 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<div class="form-group" style="margin-bottom: 5px;">
+    <div class="input-group">
+        <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+        </div>
+        <input type="text" class="form-control pull-right" id="id_filter_{{ field_name }}" value="{{ title }}">
+        <input id="id_filter_{{ field_name }}__gte" hidden type="text">
+        <input id="id_filter_{{ field_name }}__lte" hidden type="text">
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var $drp_input = $('#id_filter_{{ field_name }}');
+            // initialize date range picker widget
+            {% if LANGUAGE_CODE != 'en-us' %}
+                {% if LANGUAGE_CODE != 'zh-hans' %}
+                    moment.locale('{{ LANGUAGE_CODE }}');
+                {% else %}
+                    moment.locale('zh-CN');
+                {% endif %}
+            {% endif %}
+            $drp_input.daterangepicker(
+                {
+                    locale: {
+                        format: '{{ choices.0.date_format }}',
+                        applyLabel: '{% trans "Apply" %}',
+                        cancelLabel: '{% trans "Cancel" %}',
+                        customRangeLabel: '{% trans "Custom Range" %}'
+                    },
+                    ranges: {
+                        '{% trans "Today" %}'       : [moment(), moment()],
+                        '{% trans "Yesterday" %}'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        '{% trans "Last 7 Days" %}' : [moment().subtract(6, 'days'), moment()],
+                        '{% trans "Last 30 Days" %}': [moment().subtract(29, 'days'), moment()],
+                        '{% trans "This Month" %}'  : [moment().startOf('month'), moment().endOf('month')],
+                        '{% trans "Last Month" %}'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                },
+                function (start, end) {
+                    $drp_input.val(start.format('{{ choices.0.date_format }}') + ' - ' + end.format('{{ choices.0.date_format }}'))
+                }
+            );
+            // act on date range selection via widget
+            $drp_input.on('apply.daterangepicker', function(ev, picker) {
+                $drp_input.val(picker.startDate.format('{{ choices.0.date_format }}') + ' - ' + picker.endDate.format('{{ choices.0.date_format }}'))
+                $('#id_filter_{{ field_name }}__gte').attr('name', '{{ field_name }}__gte').val(picker.startDate.format('YYYY-MM-DD'));
+                $('#id_filter_{{ field_name }}__lte').attr('name', '{{ field_name }}__lte').val(picker.endDate.format('YYYY-MM-DD'));
+            });
+            $drp_input.on('cancel.daterangepicker', function(ev, picker) {
+                $drp_input.val('{{ title }}')
+                $('#id_filter_{{ field_name }}__gte').attr('name', '').val('');
+                $('#id_filter_{{ field_name }}__lte').attr('name', '').val('');
+            });
+            // set initial value
+            var range = "{{ choices.0.value }}";
+            if (range !== "") {
+                var vals = range.split(' - ');
+                if (vals.length === 2) {
+                    var picker = $drp_input.data('daterangepicker');
+                    picker.setStartDate(moment(vals[0], 'YYYY-MM-DD'));
+                    picker.setEndDate(moment(vals[1], 'YYYY-MM-DD'));
+                    $('#id_filter_{{ field_name }}__gte').attr('name', '{{ field_name }}__gte').val(vals[0]);
+                    $('#id_filter_{{ field_name }}__lte').attr('name', '{{ field_name }}__lte').val(vals[1]);
+                    $drp_input.val(moment(vals[0], 'YYYY-MM-DD').format('{{ choices.0.date_format }}') + ' - ' + moment(vals[1], 'YYYY-MM-DD').format('{{ choices.0.date_format }}'));
+                }
+            } else {
+                $drp_input.val('{{ title }}')
+            }
+        });
+    </script>
+</div>

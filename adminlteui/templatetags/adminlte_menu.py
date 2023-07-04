@@ -30,22 +30,29 @@ def render_main_menu(menu):
     for menu_item in menu:
         child = menu_item.get('child', [])
         if child:
+            if menu_item.get('active') is True:
+                treeview_class = 'treeview active menu-open'
+                treeview_menu_class = 'treeview-menu menu-open'
+            else:
+                treeview_class = 'treeview'
+                treeview_menu_class = 'treeview-menu'
             menu_item_html = f'''
-            <li class="treeview">
+            <li class="{treeview_class}">
                 <a href="javascript:void(0)">
                     <i class="fa {menu_item.get('icon')}"></i>
                     <span style="overflow: hidden; display: inline-block; vertical-align:top;">{menu_item.get('name')}</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
-                <ul class="treeview-menu">
+                <ul class="{treeview_menu_class}">
                     {render_main_menu(child)}
                 </ul>
             </li>
             '''
         else:
             target_blank = '' if menu_item.get('target_blank') is False else 'target="_blank"'
+            flag = 'active' if menu_item.get('active') is True else ''
             menu_item_html = f'''
-            <li><a {target_blank} href="{menu_item.get('url')}"><i class="fa {menu_item.get('icon')}"></i><span> {menu_item.get('name')}</span></a></li>
+            <li class="{flag}"><a {target_blank} href="{menu_item.get('url')}"><i class="fa {menu_item.get('icon')}"></i><span> {menu_item.get('name')}</span></a></li>
             '''
         html += menu_item_html
     return html
@@ -64,8 +71,9 @@ def render_top_menu(menu):
     for menu_item in menu:
         child = menu_item.get('child', [])
         if child:
+            flag = 'active' if menu_item.get('active') is True else ''
             menu_item_html = f'''
-            <li class="dropdown">
+            <li class="dropdown {flag}">
                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                     {menu_item.get('name')} <span class="caret"></span>
                 </a>
@@ -76,8 +84,9 @@ def render_top_menu(menu):
             '''
         else:
             target_blank = '' if menu_item.get('target_blank') is False else 'target="_blank"'
+            flag = 'active' if menu_item.get('active') is True else ''
             menu_item_html = f'''
-            <li><a {target_blank} href="{menu_item.get('url')}"> {menu_item.get('name')}</a></li>
+            <li class="{flag}"><a {target_blank} href="{menu_item.get('url')}"> {menu_item.get('name')}</a></li>
             '''
         html += menu_item_html
     return html
