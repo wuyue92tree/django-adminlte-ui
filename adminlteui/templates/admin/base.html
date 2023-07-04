@@ -19,6 +19,21 @@
 
     {% block extrastyle %} {% endblock %}
 
+    <!-- jQuery -->
+    <script src={% static "admin/components/jquery/dist/jquery.min.js" %}></script>
+    <!-- jQuery UI -->
+    <script src={% static "admin/plugins/jQueryUI/jquery-ui.min.js" %}></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap -->
+    <script src={% static "admin/components/bootstrap/dist/js/bootstrap.min.js" %}></script>
+    <!-- Slimscroll -->
+    <script src={% static "admin/components/jquery-slimscroll/jquery.slimscroll.min.js" %}></script>
+    <!-- FastClick -->
+    <script src={% static "admin/components/fastclick/lib/fastclick.js" %}></script>
+
     {% block extrahead %} {% endblock %}
     <!-- Theme style -->
     <link rel="stylesheet" href={% static "admin/dist/css/AdminLTE.min.css" %}>
@@ -420,20 +435,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src={% static "admin/components/jquery/dist/jquery.min.js" %}></script>
-<!-- jQuery UI -->
-<script src={% static "admin/plugins/jQueryUI/jquery-ui.min.js" %}></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap -->
-<script src={% static "admin/components/bootstrap/dist/js/bootstrap.min.js" %}></script>
-<!-- Slimscroll -->
-<script src={% static "admin/components/jquery-slimscroll/jquery.slimscroll.min.js" %}></script>
-<!-- FastClick -->
-<script src={% static "admin/components/fastclick/lib/fastclick.js" %}></script>
 <!-- AdminLTE App -->
 <script src={% static "admin/dist/js/adminlte.min.js" %}></script>
 <!-- AdminLTE for demo purposes -->
