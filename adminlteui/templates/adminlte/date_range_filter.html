@@ -3,8 +3,8 @@
 
 <div class="form-group" style="margin-bottom: 5px;">
     <button id="id_filter_{{ field_name }}" type="button" class="btn btn-default pull-right"><span>{{ title }} </span><i class="fa fa-caret-down"></i></button>
-    <input id="id_filter_{{ field_name }}__gte" hidden name="{{ field_name }}__gte" type="text">
-    <input id="id_filter_{{ field_name }}__lte" hidden name="{{ field_name }}__lte" type="text">
+    <input id="id_filter_{{ field_name }}__gte" hidden type="text">
+    <input id="id_filter_{{ field_name }}__lte" hidden type="text">
 
     <script>
         $(document).ready(function () {
@@ -23,9 +23,9 @@
                         format: '{{ choices.0.date_format }}',
                         applyLabel: '{% trans "Apply" %}',
                         cancelLabel: '{% trans "Cancel" %}',
-                        customRangeLabel: '{% trans "CustomRangeLabel" %}'
+                        customRangeLabel: '{% trans "Custom Range" %}'
                     },
-                    ranges   : {
+                    ranges: {
                         '{% trans "Today" %}'       : [moment(), moment()],
                         '{% trans "Yesterday" %}'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                         '{% trans "Last 7 Days" %}' : [moment().subtract(6, 'days'), moment()],
@@ -43,39 +43,24 @@
             // act on date range selection via widget
             $drp_input.on('apply.daterangepicker', function(ev, picker) {
                 $drp_input.find('span').html(picker.startDate.format('{{ choices.0.date_format }}') + ' - ' + picker.endDate.format('{{ choices.0.date_format }}') + ' ')
-                $('#id_filter_{{ field_name }}__gte').val(picker.startDate.format('YYYY-MM-DD'));
-                $('#id_filter_{{ field_name }}__lte').val(picker.endDate.format('YYYY-MM-DD'));
+                $('#id_filter_{{ field_name }}__gte').attr('name', '{{ field_name }}__gte').val(picker.startDate.format('YYYY-MM-DD'));
+                $('#id_filter_{{ field_name }}__lte').attr('name', '{{ field_name }}__lte').val(picker.endDate.format('YYYY-MM-DD'));
             });
             $drp_input.on('cancel.daterangepicker', function(ev, picker) {
                 $drp_input.find('span').html('{{ title }}' + ' ')
-                $('#id_filter_{{ field_name }}__gte').val('');
-                $('#id_filter_{{ field_name }}__lte').val('');
-            });
-            // act on manual date range edit
-            $drp_input.on('change', function(ev) {
-                var range = $(this).val();
-                if (range !== "") {
-                    var vals = range.split(' - ');
-                    if (vals.length == 2) {
-                        $('#id_filter_{{ field_name }}__gte').val(moment(vals[0], 'L').format('YYYY-MM-DD'));
-                        $('#id_filter_{{ field_name }}__lte').val(moment(vals[1], 'L').format('YYYY-MM-DD'));
-                    }
-                } else {
-                    $('#id_filter_{{ field_name }}__gte').val('');
-                    $('#id_filter_{{ field_name }}__lte').val('');
-                    $drp_input.find('span').html('{{ title }}' + ' ')
-                }
+                $('#id_filter_{{ field_name }}__gte').attr('name', '').val('');
+                $('#id_filter_{{ field_name }}__lte').attr('name', '').val('');
             });
             // set initial value
             var range = "{{ choices.0.value }}";
-            if (range != "") {
+            if (range !== "") {
                 var vals = range.split(' - ');
-                if (vals.length == 2) {
+                if (vals.length === 2) {
                     var picker = $drp_input.data('daterangepicker');
                     picker.setStartDate(moment(vals[0], 'YYYY-MM-DD'));
                     picker.setEndDate(moment(vals[1], 'YYYY-MM-DD'));
-                    $('#id_filter_{{ field_name }}__gte').val(vals[0]);
-                    $('#id_filter_{{ field_name }}__lte').val(vals[1]);
+                    $('#id_filter_{{ field_name }}__gte').attr('name', '{{ field_name }}__gte').val(vals[0]);
+                    $('#id_filter_{{ field_name }}__lte').attr('name', '{{ field_name }}__lte').val(vals[1]);
                     $drp_input.find('span').html((moment(vals[0], 'YYYY-MM-DD').format('{{ choices.0.date_format }}') + ' - ' + moment(vals[1], 'YYYY-MM-DD').format('{{ choices.0.date_format }}') + ' '));
                 }
             }

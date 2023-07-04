@@ -48,7 +48,7 @@ class DateRangeFilter(admin.FieldListFilter):
                                          _("Invalid date for '%(field_name)s' field range filter") % {
                                              'field_name': field.verbose_name})
         else:
-            self.lookup_val = None
+            self.lookup_val = ''
 
         super().__init__(field, request, params, model, model_admin, field_path)
 
