@@ -55,9 +55,14 @@ class MenuItem(object):
         menu_item['target_blank'] = self.target_blank
         menu_item['menu_type'] = self.menu_type or 'group'
 
+        if menu_item['menu_type'] != 'group':
+            if menu_item['url'] == request.path:
+                menu_item['active'] = True
+
         if self.child:
             if deep_limit == 0 or deep <= deep_limit:
                 child_list = []
+                has_child_active = False
                 for child in self.child:
                     deep += 1
                     child_menu = child.make(request, models, deep, deep_limit)
@@ -66,8 +71,13 @@ class MenuItem(object):
                         if child_menu.get('menu_type', 'group') == 'group':
                             if len(child_menu.get('child')) == 0:
                                 continue
+                        if child_menu.get('active') is True:
+                            has_child_active = True
+
                         child_list.append(child_menu)
                 menu_item['child'] = child_list
+                if has_child_active is True:
+                    menu_item['active'] = True
             else:
                 return None
         return menu_item

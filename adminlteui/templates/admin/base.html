@@ -441,56 +441,6 @@
 {% if adminlte.demo %}
     <script src={% static "admin/dist/js/demo.js" %}></script>
 {% endif %}
-<script>
-    // use js control active status of siderbar-menu
-    $(function() {
-        var menuActions = document.querySelectorAll('.sidebar-menu a')
-        var pathname = document.querySelector('#adminIndex').pathname
-        for (var i in menuActions) {
-            try {
-                if (window.location.pathname === pathname) {
-                    menuActions[i].parentNode.setAttribute('class', 'active')
-                    break
-                }
-
-                if (window.location.href.indexOf(menuActions[i].href) !== -1) {
-                    if (menuActions[i].href===window.location.origin + pathname) {
-                        continue
-                    }
-                    console.log('menu matched.', window.location.href, menuActions[i].href);
-                    menuActions[i].parentNode.setAttribute('class', 'active');
-
-                    let parent = menuActions[i].parentNode;
-                    while (true) {
-                        if (parent.parentNode.getAttribute('class') !== 'sidebar-menu tree') {
-                            if (parent.parentNode.getAttribute('class').indexOf('treeview-menu') !== -1) {
-                                parent.parentNode.setAttribute('class', 'treeview-menu menu-open');
-                                parent.parentNode.parentNode.setAttribute('class', 'treeview active');
-                            }
-                            parent = parent.parentNode;
-                        } else {
-                            break
-                        }
-                    }
-                    break
-                }
-            } catch (e) {
-                console.log(window.location.href, menuActions[i].href, e)
-            }
-        }
-
-        var topMenuActions = document.querySelectorAll('.top-menu a')
-        for (var j in topMenuActions) {
-            if (window.location.href.indexOf(topMenuActions[j].href) !== -1) {
-                topMenuActions[j].parentNode.setAttribute('class', 'active');
-                if (topMenuActions[j].parentNode.parentNode.getAttribute('class') === 'dropdown-menu') {
-                    topMenuActions[j].parentNode.parentNode.parentNode.setAttribute('class', 'dropdown active');
-                }
-                console.log('top menu matched.', window.location.href, topMenuActions[j].href);
-            }
-        }
-    })
-</script>
 
 <script>
     // sidebar push menu control
