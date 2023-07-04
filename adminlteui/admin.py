@@ -7,10 +7,17 @@ class ModelAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            "all": ("admin/components/select2/dist/css/select2.min.css",)
+            "all": (
+                "admin/components/select2/dist/css/select2.min.css",
+                # for daterangefilter
+                "admin/components/bootstrap-daterangepicker/daterangepicker.css"
+            )
         }
         js = (
             "admin/components/select2/dist/js/select2.min.js",
+            # for daterangefilter
+            "admin/components/moment/moment-with-locales.min.js",
+            "admin/components/bootstrap-daterangepicker/daterangepicker.js",
         )
 
     def changelist_view(self, request, extra_context=None):
