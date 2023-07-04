@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="form-group" style="margin-bottom: 5px;">
-    <select id="id_filter_{{ field_name }}" class="form-control search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true">
+    <select id="id_filter_{{ field_name }}" class="form-control search-filter" style="width: 100%; min-width: 200px;" tabindex="-1" aria-hidden="true">
         <option value="">{{ title }}</option>
         <option value="">---------</option>
         {% for choice in choices %}
@@ -15,8 +15,10 @@
     {% if spec.display_select2 %}
     <script>
         django.jQuery('#id_filter_{{ field_name }}').select2({
-            width: django.jQuery('#id_filter_{{ field_name }}').width() + 26
+            dropdownAutoWidth : true,
+            width: '100%'
         })
+        django.jQuery('#id_filter_{{ field_name }}').parent().find('span.select2-container').css({'min-width': '200px'})
         django.jQuery('#id_filter_{{ field_name }}').on('select2:select', function (e) {
             if (e.params.data.id !=='') {
                 django.jQuery('#id_filter_{{ field_name }}').attr('name', e.params.data.element.dataset.name)
