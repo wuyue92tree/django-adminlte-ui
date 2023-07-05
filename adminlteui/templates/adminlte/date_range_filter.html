@@ -51,8 +51,13 @@
             });
             $drp_input.on('cancel.daterangepicker', function(ev, picker) {
                 $drp_input.val('{{ title }}')
-                $('#id_filter_{{ field_name }}__gte').attr('name', '').val('');
-                $('#id_filter_{{ field_name }}__lte').attr('name', '').val('');
+                $('#id_filter_{{ field_name }}__gte').removeAttr('name').val('');
+                $('#id_filter_{{ field_name }}__lte').removeAttr('name').val('');
+            });
+            $drp_input.on('change', function(ev) {
+                $drp_input.val('{{ title }}')
+                $('#id_filter_{{ field_name }}__gte').removeAttr('name').val('');
+                $('#id_filter_{{ field_name }}__lte').removeAttr('name').val('');
             });
             // set initial value
             var range = "{{ choices.0.value }}";
