@@ -1,5 +1,8 @@
 # 更新说明
 
+## [v2.1.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/2.1.1)
+- 修复访问model子链接时，菜单激活状态渲染问题
+- 修复时间范围过滤器逻辑，在过滤取消焦点时，将时间筛选置空
 
 ## [v2.1.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/2.1.0)
 - 新增基于daterangepicker的时间过滤器

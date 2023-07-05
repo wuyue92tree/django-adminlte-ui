@@ -1,5 +1,9 @@
 # ChangeLog
 
+## [v2.1.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/2.1.1)
+- fix menu status render issue when access model child url
+- fix date range filter,setup empty when un focus except apply
+
 ## [v2.1.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/2.1.0)
 - add date range filter base on daterangepicker
 - add min-width for all filter
