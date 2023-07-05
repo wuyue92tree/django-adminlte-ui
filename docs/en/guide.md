@@ -87,7 +87,7 @@ top menu，default is `[]`，will show nothing
 > Tips: Top menu will not show icon，only support secondary menu max
 
 ## ModelAdmin
-external ModelAdmin in django
+### external ModelAdmin in django
 
 - make table filter support `select2` in `change_list` page
 - custom search field placeholder for `change_list` page
@@ -108,6 +108,24 @@ class CollectorModelAdmin(ModelAdmin):
 effect
 
 ![modeladmin](../assets/images/modeladmin.png)
+
+### Custom Filters
+#### DateRangeFilter
+
+example:
+```python title='rap/admin.py'
+from adminlteui.admin import ModelAdmin
+from adminlteui.filters import DateRangeFilter
+
+class AutomationTaskRecordAdmin(CommonAdmin, ModelAdmin):
+    list_display = ('id', 'automation', 'account', 'status', 'start_time',
+                    'end_time', 'update_time')
+    list_filter = ('automation__project', 'automation__source',
+                   'status', ('start_time', DateRangeFilter), ('end_time', DateRangeFilter))
+
+```
+effect:
+![adminlte_date_range_filter](../assets/images/adminlte_date_range_filter.png)
 
 ## Widgets
 
@@ -146,4 +164,4 @@ class CollectorAdmin(admin.ModelAdmin):
 ```
 effect:
 
-![adminlte_select](../assets/images/adminlte_select_multiple.png)
+![adminlte_select_multiple](../assets/images/adminlte_select_multiple.png)
