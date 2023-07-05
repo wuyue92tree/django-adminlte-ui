@@ -87,7 +87,7 @@ class MyAdminlteConfig(AdminlteConfig):
 > Tips: 顶部菜单将不显示Icon，并且最多显示二级菜单，多余的将被隐藏
 
 ## ModelAdmin
-扩展django的ModelAdmin
+### 扩展django的ModelAdmin
 
 - 让`change_list`页面的table过滤器支持`select2`
 - 自定义`change_list`页面搜索框的placeholder提示
@@ -108,6 +108,26 @@ class CollectorModelAdmin(ModelAdmin):
 效果图
 
 ![modeladmin](../assets/images/modeladmin.png)
+
+### Filters过滤器
+#### DateRangeFilter
+
+基于datarangepicker的时间范围过滤器
+
+示例:
+```python title='rap/admin.py'
+from adminlteui.admin import ModelAdmin
+from adminlteui.filters import DateRangeFilter
+
+class AutomationTaskRecordAdmin(CommonAdmin, ModelAdmin):
+    list_display = ('id', 'automation', 'account', 'status', 'start_time',
+                    'end_time', 'update_time')
+    list_filter = ('automation__project', 'automation__source',
+                   'status', ('start_time', DateRangeFilter), ('end_time', DateRangeFilter))
+
+```
+效果图:
+![adminlte_date_range_filter](../assets/images/adminlte_date_range_filter.png)
 
 ## Widgets组件
 
@@ -146,4 +166,4 @@ class CollectorAdmin(admin.ModelAdmin):
 ```
 效果图:
 
-![adminlte_select](../assets/images/adminlte_select_multiple.png)
+![adminlte_select_multiple](../assets/images/adminlte_select_multiple.png)

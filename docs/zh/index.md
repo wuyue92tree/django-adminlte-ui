@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 ## 功能
 
 - [自定义属性](/django-adminlte-ui/2.x/zh/guide/#_4)
+- [ModelAdmin扩展](/django-adminlte-ui/2.x/zh/guide/#modeladmin)
 - [Widget组件](/django-adminlte-ui/2.x/zh/guide/#widgets)
 - [自定义菜单](/django-adminlte-ui/2.x/zh/guide/#_5)
 
