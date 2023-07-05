@@ -37,12 +37,17 @@ class MenuItem(object):
             if not self.name:
                 menu_item['name'] = model.get('name')
             menu_item['url'] = model.get('admin_url')
+            # show menu active when access child url, add/change... page
+            if menu_item['url'] in request.path:
+                menu_item['active'] = True
         elif self.menu_type == 'link':
             menu_item['url'] = self.url
             # check permissions when permissions are not None
             if self.permissions:
                 if request.user.has_perms(self.permissions) is False:
                     return None
+            if menu_item['url'] == request.path:
+                menu_item['active'] = True
         else:
             # menu_type: group and child is empty will hide the menu
             if not self.child:
@@ -54,10 +59,6 @@ class MenuItem(object):
 
         menu_item['target_blank'] = self.target_blank
         menu_item['menu_type'] = self.menu_type or 'group'
-
-        if menu_item['menu_type'] != 'group':
-            if menu_item['url'] == request.path:
-                menu_item['active'] = True
 
         if self.child:
             if deep_limit == 0 or deep <= deep_limit:
