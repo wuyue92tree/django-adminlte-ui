@@ -428,6 +428,39 @@
     ModelAdmin
   </a>
   
+    <nav class="md-nav" aria-label="ModelAdmin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#djangomodeladmin" class="md-nav__link">
+    扩展django的ModelAdmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filters" class="md-nav__link">
+    Filters过滤器
+  </a>
+  
+    <nav class="md-nav" aria-label="Filters过滤器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#daterangefilter" class="md-nav__link">
+    DateRangeFilter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -669,6 +702,39 @@
     ModelAdmin
   </a>
   
+    <nav class="md-nav" aria-label="ModelAdmin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#djangomodeladmin" class="md-nav__link">
+    扩展django的ModelAdmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filters" class="md-nav__link">
+    Filters过滤器
+  </a>
+  
+    <nav class="md-nav" aria-label="Filters过滤器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#daterangefilter" class="md-nav__link">
+    DateRangeFilter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -800,7 +866,7 @@
 <p>Tips: 顶部菜单将不显示Icon，并且最多显示二级菜单，多余的将被隐藏</p>
 </blockquote>
 <h2 id="modeladmin">ModelAdmin</h2>
-<p>扩展django的ModelAdmin</p>
+<h3 id="djangomodeladmin">扩展django的ModelAdmin</h3>
 <ul>
 <li>让<code>change_list</code>页面的table过滤器支持<code>select2</code></li>
 <li>自定义<code>change_list</code>页面搜索框的placeholder提示</li>
@@ -819,22 +885,23 @@
 </ol>
 <p>效果图</p>
 <p><img alt="modeladmin" src="../assets/images/modeladmin.png" /></p>
+<h3 id="filters">Filters过滤器</h3>
+<h4 id="daterangefilter">DateRangeFilter</h4>
+<p>基于datarangepicker的时间范围过滤器</p>
+<p>示例:
+<div class="highlight"><span class="filename">rap/admin.py</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">adminlteui.admin</span> <span class="kn">import</span> <span class="n">ModelAdmin</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">adminlteui.filters</span> <span class="kn">import</span> <span class="n">DateRangeFilter</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">class</span> <span class="nc">AutomationTaskRecordAdmin</span><span class="p">(</span><span class="n">CommonAdmin</span><span class="p">,</span> <span class="n">ModelAdmin</span><span class="p">):</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;automation&#39;</span><span class="p">,</span> <span class="s1">&#39;account&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>                    <span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="s1">&#39;update_time&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;automation__project&#39;</span><span class="p">,</span> <span class="s1">&#39;automation__source&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>                   <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">DateRangeFilter</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">DateRangeFilter</span><span class="p">))</span>
+</code></pre></div>
+效果图:
+<img alt="adminlte_date_range_filter" src="../assets/images/adminlte_date_range_filter.png" /></p>
 <h2 id="widgets">Widgets组件</h2>
 <h3 id="adminlteselect">AdminlteSelect</h3>
-<blockquote>
-<p>自 v1.5.0b0 版本之后, 将不再需要通过template覆盖的方式激活select2.</p>
-</blockquote>
-<p>示例:
-<div class="highlight"><span class="filename">rpa/admin.py</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Collector</span><span class="p">)</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">class</span> <span class="nc">CollectorAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="o">...</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">formfield_overrides</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">AdminlteSelect</span><span class="p">}</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="p">}</span>
-</code></pre></div>
-效果图:</p>
-<p><img alt="adminlte_select" src="../assets/images/adminlte_select.png" /></p>
-<h3 id="adminlteselectmultiple">AdminlteSelectMultiple</h3>
 <blockquote>
 <p>自 v1.5.0b0 版本之后, 将不再需要通过template覆盖的方式激活select2.</p>
 </blockquote>
@@ -843,14 +910,28 @@
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">class</span> <span class="nc">CollectorAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="o">...</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">formfield_overrides</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="c1"># multiple for ManayToManyField</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="n">models</span><span class="o">.</span><span class="n">ManayToManyField</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">AdminlteSelectMultiple</span><span class="p">(</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>            <span class="n">attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;width: 100%&#39;</span><span class="p">}</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="p">)}</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="p">}</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">AdminlteSelect</span><span class="p">}</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="p">}</span>
 </code></pre></div>
 效果图:</p>
-<p><img alt="adminlte_select" src="../assets/images/adminlte_select_multiple.png" /></p>
+<p><img alt="adminlte_select" src="../assets/images/adminlte_select.png" /></p>
+<h3 id="adminlteselectmultiple">AdminlteSelectMultiple</h3>
+<blockquote>
+<p>自 v1.5.0b0 版本之后, 将不再需要通过template覆盖的方式激活select2.</p>
+</blockquote>
+<p>示例:
+<div class="highlight"><span class="filename">rpa/admin.py</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Collector</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">class</span> <span class="nc">CollectorAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="o">...</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">formfield_overrides</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="c1"># multiple for ManayToManyField</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="n">models</span><span class="o">.</span><span class="n">ManayToManyField</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">AdminlteSelectMultiple</span><span class="p">(</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>            <span class="n">attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;width: 100%&#39;</span><span class="p">}</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="p">)}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="p">}</span>
+</code></pre></div>
+效果图:</p>
+<p><img alt="adminlte_select_multiple" src="../assets/images/adminlte_select_multiple.png" /></p>
 
 
 
